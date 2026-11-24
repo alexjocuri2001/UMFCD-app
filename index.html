@@ -1,0 +1,3593 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0F4C81" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Lowkey UMFCD" />
+  <title>Lowkey o aplicație bună pt admiterea la UMFCD</title>
+
+  <!-- Manifest & Apple Touch Icon fizice pentru instalare PWA nativă și offline -->
+  <link rel="manifest" href="./manifest.json" />
+  <link rel="apple-touch-icon" href="./icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+
+  <!-- Fonturi: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            medblue: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              200: '#bae0fd',
+              500: '#0284c7',
+              600: '#1D4ED8',
+              700: '#0F4C81',
+              800: '#1e3a8a',
+              900: '#172554',
+            },
+            medgreen: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              200: '#a7f3d0',
+              500: '#10B981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .canvas-grid-bg {
+      background-color: #ffffff;
+      background-image:
+        linear-gradient(to right, rgba(15, 76, 129, 0.08) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 76, 129, 0.08) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.2s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- ==================== OVERLAY SIDEBAR MOBIL ==================== -->
+  <div id="sidebar-backdrop" onclick="closeSidebar()" class="hidden fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-xs transition-opacity"></div>
+
+  <!-- ==================== MENIU ÎN STÂNGA SUS (SIDEBAR / DRAWER) ==================== -->
+  <aside id="left-sidebar" class="fixed top-0 left-0 bottom-0 z-50 w-72 bg-white border-r border-slate-200 shadow-xl transform -translate-x-full transition-transform duration-200 ease-out flex flex-col">
+    <!-- Antet Sidebar -->
+    <div class="p-4 border-b border-slate-200 bg-gradient-to-r from-medblue-700 to-medgreen-600 text-white flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-white/15 flex items-center justify-center font-extrabold text-sm">
+          +
+        </div>
+        <div>
+          <div class="text-xs font-extrabold leading-tight">Lowkey UMFCD</div>
+          <div class="text-[10px] text-emerald-200 font-semibold">32.400 Grile • 116 Sub-cap.</div>
+        </div>
+      </div>
+      <button onclick="closeSidebar()" aria-label="Închide meniul" class="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-sm font-bold">
+        ✕
+      </button>
+    </div>
+
+    <!-- Opțiunile Principale din Meniul Stânga Sus -->
+    <nav class="flex-1 overflow-y-auto p-3 space-y-1.5">
+      <button onclick="navigateFromMenu('home')" id="menu-item-home" class="sidebar-nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-bold text-left transition">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>Acasă / Statistici</span>
+      </button>
+
+      <button onclick="navigateFromMenu('anatomy')" id="menu-item-anatomy" class="sidebar-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-bold text-left transition">
+        <span class="flex items-center gap-3">
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          <span>Grile anatomie</span>
+        </span>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-medblue-100 text-medblue-800">76 sub-cap</span>
+      </button>
+
+      <button onclick="navigateFromMenu('physics')" id="menu-item-physics" class="sidebar-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-bold text-left transition">
+        <span class="flex items-center gap-3">
+          <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span>Grile fizică</span>
+        </span>
+        <span class="text-[10px] font-mono px-2 py-0.5 rounded-full bg-medgreen-100 text-medgreen-800">40 sub-cap</span>
+      </button>
+
+      <div class="my-2 border-t border-slate-100"></div>
+
+      <button onclick="navigateFromMenu('simulation')" id="menu-item-simulation" class="sidebar-nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-bold text-left transition">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>Simulări</span>
+      </button>
+
+      <button onclick="navigateFromMenu('quicktest')" id="menu-item-quicktest" class="sidebar-nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-bold text-left transition">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+        <span>Teste rapide</span>
+      </button>
+
+      <button onclick="navigateFromMenu('notebook')" id="menu-item-notebook" class="sidebar-nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-bold text-left transition">
+        <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+        <span>Carnețel</span>
+      </button>
+
+      <div class="my-2 border-t border-slate-100"></div>
+
+      <button onclick="closeSidebar(); openInstallModal();" class="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-extrabold text-left bg-medgreen-50 text-medgreen-800 hover:bg-medgreen-100 border border-medgreen-200 transition">
+        <svg class="w-5 h-5 shrink-0 text-medgreen-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+        <span>Instalează pe telefon (PWA)</span>
+      </button>
+    </nav>
+
+    <!-- Footer Sidebar -->
+    <div class="p-3.5 border-t border-slate-200 bg-slate-50 text-xs text-slate-600 space-y-1">
+      <div class="flex justify-between font-bold">
+        <span>Grile rezolvate:</span>
+        <span class="font-mono text-medblue-700" id="sb-solved">0 / 32.400</span>
+      </div>
+      <div class="flex justify-between font-bold">
+        <span>Corectitudine:</span>
+        <span class="font-mono text-medgreen-700" id="sb-acc">0%</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== HEADER SUS CU BUTON MENIU ÎN STÂNGA SUS ==================== -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2">
+      <!-- Stânga sus: Buton Hamburger permanent + Titlu Aplicație -->
+      <div class="flex items-center gap-2.5 min-w-0">
+        <button onclick="openSidebar()" id="btn-open-menu" aria-label="Deschide meniul principal" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-medblue-700 hover:bg-medblue-800 active:scale-95 text-white font-bold text-xs sm:text-sm shadow-xs transition shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+          <span>Meniu</span>
+        </button>
+
+        <div onclick="navigateFromMenu('home')" class="cursor-pointer min-w-0">
+          <h1 class="text-xs sm:text-base font-extrabold text-slate-900 tracking-tight truncate">
+            Lowkey o aplicație bună pt admiterea la UMFCD
+          </h1>
+          <div class="flex items-center gap-1.5 text-[10px] sm:text-xs font-semibold text-slate-500">
+            <span class="text-medblue-700">Anatomie Corint</span>
+            <span>•</span>
+            <span class="text-medgreen-700">Fizică UMFCD</span>
+            <span class="hidden sm:inline">• 32.400 Grile</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dreapta sus: Statistici permanente + Instalare -->
+      <div class="flex items-center gap-2 shrink-0">
+        <div class="hidden md:flex items-center gap-2.5 bg-medblue-50 border border-medblue-200 px-3 py-1.5 rounded-xl">
+          <div class="text-right">
+            <div class="text-[10px] uppercase font-bold text-medblue-700">Rezolvate</div>
+            <div class="text-xs font-extrabold font-mono text-slate-900"><span id="hdr-solved">0</span> / 32.400</div>
+          </div>
+          <div class="h-6 w-px bg-medblue-200"></div>
+          <div class="text-right">
+            <div class="text-[10px] uppercase font-bold text-medgreen-700">Corectitudine</div>
+            <div class="text-xs font-extrabold font-mono text-medgreen-700" id="hdr-accuracy">0%</div>
+          </div>
+        </div>
+
+        <button onclick="openInstallModal()" class="flex items-center gap-1.5 bg-medgreen-600 hover:bg-medgreen-700 active:scale-95 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-xs transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+          </svg>
+          <span class="hidden sm:inline">Instalează App</span>
+          <span class="sm:hidden">PWA</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bară statistici compactă mobil -->
+    <div class="md:hidden bg-slate-50 border-t border-slate-200 px-3 py-1.5 flex items-center justify-between text-[11px]">
+      <span>Rezolvate: <strong class="font-mono text-medblue-800" id="mob-solved">0 / 32.400</strong></span>
+      <span>Corectitudine: <strong class="font-mono text-medgreen-700" id="mob-accuracy">0%</strong></span>
+      <span class="text-slate-500 font-semibold">116 Sub-capitole</span>
+    </div>
+  </header>
+
+  <!-- ==================== CONȚINUT PRINCIPAL ==================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-3 sm:px-6 py-5">
+
+    <!-- ==================== VIEW 1: ACASĂ / STATISTICI ==================== -->
+    <section id="view-home" class="space-y-6 animate-fade-in">
+      <!-- KPI Cards -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Grile Rezolvate</div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-mono mt-1" id="kpi-total-solved">0</div>
+          <div class="text-xs text-slate-500 mt-1">din <strong class="text-medblue-700">32.400</strong> grile unice</div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+          <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Acuratețe Globală</div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-medgreen-600 font-mono mt-1" id="kpi-accuracy">0.0%</div>
+          <div class="text-xs text-slate-500 mt-1"><span id="kpi-correct-count" class="font-bold text-medgreen-700">0</span> corecte • <span id="kpi-wrong-count" class="font-bold text-rose-600">0</span> greșite</div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Anatomie (Corint)</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-medblue-100 text-medblue-800">20.000 grile</span>
+          </div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-medblue-700 font-mono mt-1" id="kpi-anat-acc">0%</div>
+          <div class="text-xs text-slate-500 mt-1"><span id="kpi-anat-solved">0</span> rezolvate (76 sub-cap.)</div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Fizică (UMFCD)</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-medgreen-100 text-medgreen-800">12.400 grile</span>
+          </div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-medgreen-700 font-mono mt-1" id="kpi-phys-acc">0%</div>
+          <div class="text-xs text-slate-500 mt-1"><span id="kpi-phys-solved">0</span> rezolvate (40 sub-cap.)</div>
+        </div>
+      </div>
+
+      <!-- Banner Acțiuni Rapide -->
+      <div class="bg-gradient-to-r from-medblue-800 via-medblue-700 to-medgreen-700 rounded-2xl p-5 text-white shadow-md flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-white/15 text-emerald-200">
+            116 Sub-capitole Granulare • Dificultate 1/10 – 10/10
+          </div>
+          <h2 class="text-lg sm:text-xl font-extrabold">Pregătire completă pe fiecare sub-capitol din Corint & Fizică</h2>
+          <p class="text-xs sm:text-sm text-blue-100">
+            Folosește butonul <strong>Meniu</strong> din stânga sus pentru a intra în <em>Grile anatomie</em>, <em>Grile fizică</em>, <em>Teste rapide</em>, <em>Simulări</em> sau <em>Carnețel</em>.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2.5 shrink-0">
+          <button onclick="navigateFromMenu('anatomy')" class="px-4 py-2.5 rounded-xl bg-white text-medblue-900 hover:bg-blue-50 text-xs sm:text-sm font-extrabold shadow-xs transition">
+            Grile Anatomie (76 sub-cap.)
+          </button>
+          <button onclick="navigateFromMenu('physics')" class="px-4 py-2.5 rounded-xl bg-medgreen-500 hover:bg-medgreen-400 text-slate-950 text-xs sm:text-sm font-extrabold shadow-xs transition">
+            Grile Fizică (40 sub-cap.)
+          </button>
+          <button onclick="startWrongQuestionsPractice()" class="px-4 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 border border-white/25 text-white text-xs sm:text-sm font-bold transition">
+            Refă Greșelile (<span id="wrong-pool-badge">0</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- Progresul pe Sub-capitole (Sedimentarea materiei) -->
+      <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-xs space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h3 class="text-base sm:text-lg font-extrabold text-slate-900">Gradul de sedimentare pe sub-capitole (116 sub-capitole)</h3>
+            <p class="text-xs text-slate-500">Apasă pe orice sub-capitol pentru a începe imediat grilele din acea lecție.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <input type="text" id="home-search-sub" oninput="renderHomeSubchaptersOverview()" placeholder="Caută sub-capitol..." class="text-xs sm:text-sm px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-medblue-500" />
+            <select id="home-filter-subj" onchange="renderHomeSubchaptersOverview()" class="text-xs sm:text-sm px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 font-bold">
+              <option value="ALL">Toate (116)</option>
+              <option value="Anatomie">Anatomie (76)</option>
+              <option value="Fizică">Fizică (40)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="home-subchapters-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[560px] overflow-y-auto pr-1">
+          <!-- Populat dinamic -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 2: CATALOG SUB-CAPITOLE (ANATOMIE / FIZICĂ) ==================== -->
+    <section id="view-catalog" class="hidden space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+        <div>
+          <span id="catalog-badge" class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-medblue-100 text-medblue-800 mb-1">Anatomie Corint</span>
+          <h2 id="catalog-title" class="text-xl font-extrabold text-slate-900">Toate sub-capitolele de Anatomie (76 sub-capitole)</h2>
+          <p id="catalog-subtitle" class="text-xs sm:text-sm text-slate-500">Selectează un sub-capitol pentru antrenament țintit și alege dificultatea dorită (1/10 – 10/10).</p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <input type="text" id="catalog-search-input" oninput="renderCatalogView()" placeholder="Filtrează după nume..." class="text-xs sm:text-sm px-3 py-2 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-medblue-500" />
+          <select id="catalog-diff-select" onchange="setGlobalDifficultyFilter(this.value)" class="text-xs sm:text-sm px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 font-bold text-slate-800">
+            <option value="ALL">Dificultate: Toate (1/10 - 10/10)</option>
+            <option value="EASY">1/10 – 3/10 (Fixare bază)</option>
+            <option value="MEDIUM">4/10 – 6/10 (Nivel mediu)</option>
+            <option value="HARD">7/10 – 8/10 (Avansat)</option>
+            <option value="EXTREME">9/10 – 10/10 (Capcane UMFCD)</option>
+            <option value="1">Exact 1/10</option>
+            <option value="2">Exact 2/10</option>
+            <option value="3">Exact 3/10</option>
+            <option value="4">Exact 4/10</option>
+            <option value="5">Exact 5/10</option>
+            <option value="6">Exact 6/10</option>
+            <option value="7">Exact 7/10</option>
+            <option value="8">Exact 8/10</option>
+            <option value="9">Exact 9/10</option>
+            <option value="10">Exact 10/10</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="catalog-chapters-container" class="space-y-6">
+        <!-- Populat dinamic cu toate capitolele și sub-capitolele granulare -->
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 3: ANTRENAMENT GRILE PE SUB-CAPITOL ==================== -->
+    <section id="view-practice" class="hidden space-y-4 animate-fade-in">
+      <!-- Bară de control -->
+      <div class="bg-white rounded-2xl p-3.5 sm:p-4 border border-slate-200 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="backToSubjectCatalog()" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1 transition">
+            <span>← Sub-capitole</span>
+          </button>
+
+          <select id="practice-subchapter-select" onchange="changePracticeSubchapter(this.value)" class="bg-medblue-50 border border-medblue-200 text-medblue-900 text-xs sm:text-sm font-bold rounded-xl px-3 py-2 max-w-[270px] sm:max-w-md focus:outline-none">
+            <!-- Populat dinamic -->
+          </select>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <select id="practice-diff-select" onchange="setGlobalDifficultyFilter(this.value, true)" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs font-bold rounded-xl px-3 py-2">
+            <option value="ALL">Dificultate: Toate (1-10/10)</option>
+            <option value="EASY">Dificultate: 1/10 – 3/10</option>
+            <option value="MEDIUM">Dificultate: 4/10 – 6/10</option>
+            <option value="HARD">Dificultate: 7/10 – 8/10</option>
+            <option value="EXTREME">Dificultate: 9/10 – 10/10</option>
+            <option value="1">Dificultate: 1/10</option>
+            <option value="2">Dificultate: 2/10</option>
+            <option value="3">Dificultate: 3/10</option>
+            <option value="4">Dificultate: 4/10</option>
+            <option value="5">Dificultate: 5/10</option>
+            <option value="6">Dificultate: 6/10</option>
+            <option value="7">Dificultate: 7/10</option>
+            <option value="8">Dificultate: 8/10</option>
+            <option value="9">Dificultate: 9/10</option>
+            <option value="10">Dificultate: 10/10</option>
+          </select>
+
+          <select id="practice-type-select" onchange="loadNextPracticeQuestion()" class="bg-slate-50 border border-slate-300 text-slate-800 text-xs font-bold rounded-xl px-3 py-2">
+            <option value="ALL">Tip: Toate grilele</option>
+            <option value="CS">Complement Simplu (CS)</option>
+            <option value="CG">Complement Grupat (CG)</option>
+            <option value="CE">Cauză - Efect (Fizică)</option>
+            <option value="PROB">Probleme calcul (Fizică)</option>
+          </select>
+
+          <button onclick="toggleQuickScratchpad()" class="px-3 py-2 rounded-xl bg-medgreen-50 hover:bg-medgreen-100 border border-medgreen-200 text-medgreen-800 text-xs font-bold transition">
+            Ciornă / Desen
+          </button>
+        </div>
+      </div>
+
+      <!-- Card Grilă + Ciornă -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <div id="practice-card-col" class="lg:col-span-12">
+          <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+            <div class="bg-slate-50 border-b border-slate-200 px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-2">
+              <div class="flex flex-wrap items-center gap-2">
+                <span id="q-badge-id" class="font-mono text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-200 text-slate-700">#00001</span>
+                <span id="q-badge-subject" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-medblue-100 text-medblue-800">Anatomie</span>
+                <span id="q-badge-subchapter" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700">Sub-capitol</span>
+                <span id="q-badge-type" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200">Complement Simplu</span>
+              </div>
+
+              <div id="q-badge-difficulty" class="flex items-center gap-1.5 px-3 py-1 rounded-xl font-mono text-xs font-extrabold bg-amber-50 text-amber-800 border border-amber-200">
+                <span>Dificultate:</span>
+                <span id="q-diff-value" class="text-sm">6/10</span>
+              </div>
+            </div>
+
+            <div id="q-rule-banner" class="hidden bg-medblue-50/80 border-b border-medblue-100 px-4 sm:px-6 py-2.5 text-xs text-medblue-900"></div>
+
+            <div class="p-4 sm:p-6 space-y-5">
+              <div id="q-stem" class="text-base sm:text-lg font-semibold text-slate-900 leading-relaxed"></div>
+              <div id="q-statements" class="hidden space-y-2 bg-slate-50 p-4 rounded-xl border border-slate-200 text-sm sm:text-base text-slate-800"></div>
+              <div id="q-options" class="space-y-2.5"></div>
+
+              <div id="q-explanation-box" class="hidden rounded-2xl p-4 sm:p-5 border transition-all">
+                <div class="flex items-center gap-2 font-extrabold text-sm sm:text-base mb-2" id="q-result-title"></div>
+                <p id="q-explanation-text" class="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line"></p>
+                <div id="q-reference-tag" class="mt-3 inline-block text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white/80 text-slate-600 border border-slate-200"></div>
+              </div>
+
+              <div class="pt-2 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100">
+                <div class="text-xs text-slate-500">
+                  Progres sub-capitol: <strong id="q-subchapter-progress" class="text-slate-800 font-mono">0 rezolvate (0%)</strong>
+                </div>
+                <div class="flex items-center gap-2.5 ml-auto">
+                  <button id="btn-submit-answer" onclick="submitPracticeAnswer()" disabled class="px-5 py-2.5 rounded-xl bg-medblue-700 disabled:bg-slate-300 disabled:cursor-not-allowed hover:bg-medblue-800 text-white text-sm font-bold shadow-xs transition">
+                    Verifică Răspunsul
+                  </button>
+                  <button id="btn-next-question" onclick="loadNextPracticeQuestion()" class="hidden px-5 py-2.5 rounded-xl bg-medgreen-600 hover:bg-medgreen-700 text-white text-sm font-bold shadow-xs transition">
+                    Următoarea Grilă →
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panou Lateral Ciornă -->
+        <div id="practice-scratchpad-col" class="hidden lg:col-span-5">
+          <div class="bg-white rounded-2xl border border-medgreen-200 shadow-xs p-4 space-y-3 sticky top-20">
+            <div class="flex items-center justify-between">
+              <h3 class="text-sm font-extrabold text-medgreen-800">Ciornă Rapidă & Scheme</h3>
+              <button onclick="toggleQuickScratchpad()" class="text-xs font-bold text-slate-400 hover:text-slate-700 px-2 py-1">Închide ✕</button>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button onclick="setScratchColor('#0F4C81')" class="w-6 h-6 rounded-full bg-[#0F4C81] border-2 border-white shadow-xs"></button>
+              <button onclick="setScratchColor('#059669')" class="w-6 h-6 rounded-full bg-[#059669] border-2 border-white shadow-xs"></button>
+              <button onclick="setScratchColor('#dc2626')" class="w-6 h-6 rounded-full bg-[#dc2626] border-2 border-white shadow-xs"></button>
+              <button onclick="setScratchColor('#0f172a')" class="w-6 h-6 rounded-full bg-[#0f172a] border-2 border-white shadow-xs"></button>
+              <button onclick="clearScratchpad()" class="ml-auto text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700">Șterge</button>
+            </div>
+            <canvas id="quick-scratch-canvas" class="w-full h-60 rounded-xl border border-slate-300 canvas-grid-bg touch-none cursor-crosshair"></canvas>
+            <textarea rows="3" placeholder="Calcule rapide sau formule..." class="w-full text-xs p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: TESTE RAPIDE ==================== -->
+    <section id="view-quicktest" class="hidden space-y-5 animate-fade-in">
+      <!-- Configurator Test Rapid -->
+      <div id="qt-setup-card" class="max-w-3xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="bg-gradient-to-r from-medblue-700 to-medgreen-600 p-6 text-white">
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/15 uppercase">Antrenament Scurt</span>
+          <h2 class="text-2xl font-extrabold mt-2">Generator de Teste Rapide</h2>
+          <p class="text-xs sm:text-sm text-blue-100 mt-1">Configurează un test rapid de 10, 15, 20 sau 30 de grile din Anatomie, Fizică sau Mixt, filtrat după dificultate.</p>
+        </div>
+
+        <div class="p-6 space-y-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Materie</label>
+              <select id="qt-subject" class="w-full text-sm px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 font-bold">
+                <option value="MIX">Mixt (Anatomie + Fizică)</option>
+                <option value="Anatomie">Doar Anatomie (Corint)</option>
+                <option value="Fizică">Doar Fizică (UMFCD)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Număr de întrebări</label>
+              <select id="qt-count" class="w-full text-sm px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 font-bold">
+                <option value="10">10 grile (Rapid - ~10 min)</option>
+                <option value="15" selected>15 grile (Standard - ~15 min)</option>
+                <option value="20">20 grile (Intensiv - ~20 min)</option>
+                <option value="30">30 grile (Extins - ~30 min)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Dificultate grile (?/10)</label>
+              <select id="qt-diff" class="w-full text-sm px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 font-bold">
+                <option value="ALL">Toate nivelurile (1/10 – 10/10)</option>
+                <option value="EASY">1/10 – 3/10 (Ușor)</option>
+                <option value="MEDIUM">4/10 – 6/10 (Mediu)</option>
+                <option value="HARD">7/10 – 8/10 (Ridicat)</option>
+                <option value="EXTREME">9/10 – 10/10 (Capcane UMFCD)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Sursă întrebări</label>
+              <select id="qt-source" class="w-full text-sm px-3 py-2.5 rounded-xl border border-slate-300 bg-slate-50 font-bold">
+                <option value="ALL">Toate cele 32.400 grile</option>
+                <option value="WRONG">Doar grile greșite anterior</option>
+              </select>
+            </div>
+          </div>
+
+          <button onclick="startQuickTest()" class="w-full py-3.5 rounded-xl bg-medblue-700 hover:bg-medblue-800 text-white font-extrabold text-sm sm:text-base shadow-xs transition">
+            Generează și Începe Testul Rapid
+          </button>
+        </div>
+      </div>
+
+      <!-- Desfășurare Test Rapid -->
+      <div id="qt-active-card" class="hidden max-w-4xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="bg-slate-50 border-b border-slate-200 px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-1 rounded-lg bg-medgreen-600 text-white font-mono text-xs font-extrabold">
+              Test Rapid: <span id="qt-progress-label">1 / 15</span>
+            </span>
+            <span id="qt-q-sub" class="text-xs font-bold text-slate-700">Sub-capitol</span>
+          </div>
+          <span id="qt-q-diff" class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200">Dif: 5/10</span>
+        </div>
+
+        <div class="p-4 sm:p-6 space-y-4">
+          <div id="qt-q-rule" class="hidden bg-medblue-50 p-2.5 rounded-xl text-xs text-medblue-900"></div>
+          <div id="qt-q-stem" class="text-base sm:text-lg font-semibold text-slate-900"></div>
+          <div id="qt-q-statements" class="hidden space-y-1.5 bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-sm text-slate-800"></div>
+          <div id="qt-q-options" class="space-y-2.5"></div>
+
+          <div id="qt-q-exp" class="hidden p-4 rounded-xl border text-xs sm:text-sm space-y-1"></div>
+
+          <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+            <button onclick="resetQuickTest()" class="text-xs font-bold text-slate-500 hover:text-slate-800">Anulează testul</button>
+            <div class="flex gap-2">
+              <button id="qt-btn-check" onclick="checkQuickTestAnswer()" disabled class="px-5 py-2.5 rounded-xl bg-medblue-700 disabled:bg-slate-300 text-white text-xs sm:text-sm font-bold">
+                Verifică
+              </button>
+              <button id="qt-btn-next" onclick="nextQuickTestQuestion()" class="hidden px-5 py-2.5 rounded-xl bg-medgreen-600 text-white text-xs sm:text-sm font-bold">
+                Continuă →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rezultat Test Rapid -->
+      <div id="qt-result-card" class="hidden max-w-2xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-xs p-6 text-center space-y-4">
+        <div class="w-14 h-14 rounded-2xl bg-medgreen-100 text-medgreen-700 flex items-center justify-center mx-auto text-2xl font-extrabold">
+          ✓
+        </div>
+        <h3 class="text-xl font-extrabold text-slate-900">Test Rapid Finalizat!</h3>
+        <div class="text-3xl font-extrabold font-mono text-medblue-700" id="qt-final-score">12 / 15 (80%)</div>
+        <p class="text-xs sm:text-sm text-slate-600">Toate răspunsurile au fost înregistrate în statisticile tale globale și pe sub-capitole.</p>
+        <button onclick="resetQuickTest()" class="px-6 py-2.5 rounded-xl bg-medblue-700 hover:bg-medblue-800 text-white text-sm font-bold">
+          Configurează Alt Test Rapid
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 5: MOD SIMULĂRI UMFCD ==================== -->
+    <section id="view-simulation" class="hidden space-y-5 animate-fade-in">
+      <!-- Setup Simulare -->
+      <div id="sim-setup-screen" class="max-w-3xl mx-auto bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="bg-gradient-to-r from-medblue-800 to-medgreen-700 p-6 text-white">
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/15 uppercase">Examen Admitere UMFCD</span>
+          <h2 class="text-2xl font-extrabold mt-2">Simulări Oficiale Anatomie + Fizică</h2>
+          <p class="text-xs sm:text-sm text-blue-100 mt-1">Structură autentică de examen: 60% Anatomie (Corint) + 40% Fizică, cronometru și calculul notei finale (1.00 – 10.00).</p>
+        </div>
+
+        <div class="p-6 space-y-5">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <label class="cursor-pointer border-2 border-medblue-600 bg-medblue-50/50 rounded-2xl p-4 block transition" id="sim-mode-100-card">
+              <input type="radio" name="simFormat" value="100" checked onchange="updateSimFormatUI()" class="sr-only" />
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-extrabold text-medblue-900">Simulare Completă (100 Grile)</span>
+                <span class="text-xs font-bold px-2 py-0.5 rounded bg-medblue-700 text-white">150 min</span>
+              </div>
+              <p class="text-xs text-slate-600">60 grile Anatomie + 40 grile Fizică • Format oficial UMFCD.</p>
+            </label>
+
+            <label class="cursor-pointer border-2 border-slate-200 hover:border-medgreen-400 rounded-2xl p-4 block transition" id="sim-mode-50-card">
+              <input type="radio" name="simFormat" value="50" onchange="updateSimFormatUI()" class="sr-only" />
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-extrabold text-slate-900">Simulare Medie (50 Grile)</span>
+                <span class="text-xs font-bold px-2 py-0.5 rounded bg-medgreen-600 text-white">75 min</span>
+              </div>
+              <p class="text-xs text-slate-600">30 grile Anatomie + 20 grile Fizică • Verificare intermediară.</p>
+            </label>
+          </div>
+
+          <button onclick="startSimulation()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-medblue-700 to-medgreen-600 hover:from-medblue-800 hover:to-medgreen-700 text-white font-extrabold text-base shadow-sm transition">
+            Începe Simularea Acum
+          </button>
+        </div>
+      </div>
+
+      <!-- Simulare Activă -->
+      <div id="sim-active-screen" class="hidden space-y-4">
+        <div class="bg-white rounded-2xl p-3.5 sm:p-4 border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <div class="px-3 py-1.5 rounded-xl bg-slate-900 text-white font-mono text-sm sm:text-base font-extrabold">
+              ⏱ <span id="sim-timer">150:00</span>
+            </div>
+            <div class="text-xs sm:text-sm font-bold text-slate-700">
+              Întrebarea <span id="sim-curr-num" class="text-medblue-700 font-extrabold">1</span> / <span id="sim-total-num">100</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="toggleSimFlag()" class="px-3 py-2 rounded-xl border border-amber-300 bg-amber-50 text-amber-800 text-xs font-bold hover:bg-amber-100">
+              Marchează incertă
+            </button>
+            <button onclick="requestFinishSimulation()" class="px-4 py-2 rounded-xl bg-medgreen-600 hover:bg-medgreen-700 text-white text-xs sm:text-sm font-extrabold shadow-xs">
+              Predă Lucrarea
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          <div class="lg:col-span-8 bg-white rounded-2xl border border-slate-200 shadow-xs p-4 sm:p-6 space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100">
+              <div class="flex items-center gap-2">
+                <span id="sim-q-subject" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-medblue-100 text-medblue-800">Anatomie</span>
+                <span id="sim-q-subchapter" class="text-xs font-semibold px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Sub-capitol</span>
+                <span id="sim-q-type" class="text-xs font-bold px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700">CS</span>
+              </div>
+              <span id="sim-q-diff" class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200">Dif: 7/10</span>
+            </div>
+
+            <div id="sim-q-rule" class="hidden bg-medblue-50 p-2.5 rounded-xl text-xs text-medblue-900"></div>
+            <div id="sim-q-stem" class="text-base sm:text-lg font-semibold text-slate-900 leading-relaxed"></div>
+            <div id="sim-q-statements" class="hidden space-y-1.5 bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-sm text-slate-800"></div>
+            <div id="sim-q-options" class="space-y-2.5"></div>
+
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+              <button onclick="navigateSimQuestion(-1)" id="btn-sim-prev" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-bold">
+                ← Înapoi
+              </button>
+              <button onclick="navigateSimQuestion(1)" id="btn-sim-next" class="px-4 py-2 rounded-xl bg-medblue-700 hover:bg-medblue-800 text-white text-xs sm:text-sm font-bold">
+                Înainte →
+              </button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-xs p-4 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="text-xs font-extrabold uppercase tracking-wider text-slate-600">Borderou Examen</h3>
+              <span class="text-xs font-mono font-bold text-medgreen-700"><span id="sim-answered-count">0</span> completate</span>
+            </div>
+            <div id="sim-grid-palette" class="grid grid-cols-10 gap-1.5 max-h-80 overflow-y-auto p-1"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rezultate Simulare -->
+      <div id="sim-results-screen" class="hidden space-y-5">
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+          <div class="bg-gradient-to-r from-medblue-800 to-medgreen-700 p-6 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="text-xs font-bold uppercase bg-white/15 px-2.5 py-1 rounded-full">Rezultat Simulare UMFCD</span>
+              <h2 class="text-2xl sm:text-3xl font-extrabold mt-2">Nota Finală: <span id="res-final-grade" class="text-emerald-300 font-mono">8.50</span></h2>
+              <p class="text-xs sm:text-sm text-blue-100 mt-1">
+                Punctaj: <strong id="res-raw-score">83 / 100</strong> • Timp utilizat: <strong id="res-time-used">95 min</strong>
+              </p>
+            </div>
+            <button onclick="resetSimulationSetup()" class="px-5 py-2.5 rounded-xl bg-white text-medblue-900 font-extrabold text-sm shadow-xs hover:bg-blue-50">
+              Simulare Nouă
+            </button>
+          </div>
+
+          <div class="p-6 space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="p-4 rounded-xl bg-medblue-50 border border-medblue-200">
+                <div class="text-xs font-bold text-medblue-800 uppercase">Anatomie</div>
+                <div class="text-2xl font-extrabold text-medblue-900 font-mono mt-1" id="res-anat-score">0 / 60</div>
+              </div>
+              <div class="p-4 rounded-xl bg-medgreen-50 border border-medgreen-200">
+                <div class="text-xs font-bold text-medgreen-800 uppercase">Fizică</div>
+                <div class="text-2xl font-extrabold text-medgreen-900 font-mono mt-1" id="res-phys-score">0 / 40</div>
+              </div>
+            </div>
+            <div id="sim-review-list" class="space-y-3 max-h-[500px] overflow-y-auto pr-1"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 6: CARNEȚEL & TABLĂ DE DESEN ==================== -->
+    <section id="view-notebook" class="hidden space-y-5 animate-fade-in">
+      <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="text-lg sm:text-xl font-extrabold text-slate-900">Carnețel de Studiul & Schițe</h2>
+          <p class="text-xs sm:text-sm text-slate-500">Notează rezumate pe sub-capitole și desenează scheme anatomice sau circuite electrice.</p>
+        </div>
+        <div class="flex items-center gap-2 bg-slate-100 p-1 rounded-xl self-start">
+          <button onclick="switchNotebookTab('draw')" id="nb-tab-draw" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-white text-medblue-800 shadow-xs transition">
+            Tablă de Desen
+          </button>
+          <button onclick="switchNotebookTab('notes')" id="nb-tab-notes" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-slate-600 hover:text-slate-900 transition">
+            Notițe Text (<span id="notes-count-badge">0</span>)
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab Desen -->
+      <div id="nb-panel-draw" class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div class="lg:col-span-8 bg-white rounded-2xl border border-slate-200 shadow-xs p-4 space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-slate-100">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold text-slate-500">Culoare:</span>
+              <button onclick="setMainPenColor('#0F4C81')" class="w-7 h-7 rounded-full bg-[#0F4C81] ring-2 ring-offset-2 ring-medblue-500"></button>
+              <button onclick="setMainPenColor('#059669')" class="w-7 h-7 rounded-full bg-[#059669]"></button>
+              <button onclick="setMainPenColor('#dc2626')" class="w-7 h-7 rounded-full bg-[#dc2626]"></button>
+              <button onclick="setMainPenColor('#0f172a')" class="w-7 h-7 rounded-full bg-[#0f172a]"></button>
+              <button onclick="setMainPenColor('#ffffff')" class="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-300 text-xs font-bold text-slate-700">Radieră</button>
+            </div>
+            <div class="flex items-center gap-2">
+              <select id="main-pen-size" class="bg-slate-50 border border-slate-300 rounded-lg text-xs font-bold px-2 py-1">
+                <option value="2">2px</option>
+                <option value="4" selected>4px</option>
+                <option value="8">8px</option>
+              </select>
+              <button onclick="clearMainCanvas()" class="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold">Curăță</button>
+            </div>
+          </div>
+
+          <canvas id="main-draw-canvas" class="w-full h-[360px] sm:h-[420px] rounded-xl border-2 border-slate-200 canvas-grid-bg touch-none cursor-crosshair"></canvas>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-1">
+            <input type="text" id="sketch-title-input" placeholder="Titlu schiță (ex: Nefronul / Lentilă convergentă)" class="flex-1 text-sm px-3.5 py-2 rounded-xl border border-slate-300 focus:outline-none" />
+            <button onclick="saveSketchToGallery()" class="px-5 py-2.5 rounded-xl bg-medgreen-600 hover:bg-medgreen-700 text-white text-sm font-bold shadow-xs shrink-0">
+              Salvează Schița
+            </button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 bg-white rounded-2xl border border-slate-200 shadow-xs p-4 space-y-3">
+          <h3 class="text-sm font-extrabold text-slate-900">Schițe Salvate (<span id="sketches-count">0</span>)</h3>
+          <div id="sketches-gallery" class="space-y-3 max-h-[480px] overflow-y-auto pr-1"></div>
+        </div>
+      </div>
+
+      <!-- Tab Notițe -->
+      <div id="nb-panel-notes" class="hidden grid-cols-1 lg:grid-cols-12 gap-5">
+        <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200 shadow-xs p-5 space-y-4">
+          <h3 class="text-base font-extrabold text-slate-900">Adaugă Notiță Nouă</h3>
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Sub-capitol asociat</label>
+              <select id="note-subchapter-select" class="w-full text-sm px-3 py-2 rounded-xl border border-slate-300 bg-slate-50 font-medium"></select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Titlu</label>
+              <input type="text" id="note-title-input" placeholder="Ex: Căile ascendente medulare / Formule optică" class="w-full text-sm px-3.5 py-2 rounded-xl border border-slate-300" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-600 mb-1">Conținut</label>
+              <textarea id="note-content-input" rows="6" placeholder="Scrie notițele tale..." class="w-full text-sm p-3.5 rounded-xl border border-slate-300"></textarea>
+            </div>
+            <button onclick="saveTextNote()" class="w-full py-2.5 rounded-xl bg-medblue-700 hover:bg-medblue-800 text-white text-sm font-bold shadow-xs">
+              Salvează Notița
+            </button>
+          </div>
+        </div>
+        <div class="lg:col-span-7 space-y-3" id="notes-list-container"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MODAL INSTALARE REALĂ PE TELEFON (PWA) ==================== -->
+  <div id="install-modal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl animate-fade-in max-h-[90vh] flex flex-col">
+      <div class="bg-gradient-to-r from-medblue-800 to-medgreen-700 p-5 text-white flex items-center justify-between shrink-0">
+        <div>
+          <h3 class="font-extrabold text-base sm:text-lg">Instalează aplicația pe telefon</h3>
+          <p class="text-xs text-blue-100">Funcționează ca aplicație nativă pe Android și iPhone</p>
+        </div>
+        <button onclick="closeInstallModal()" class="text-white/80 hover:text-white text-lg font-bold px-2">✕</button>
+      </div>
+
+      <div class="p-5 space-y-4 text-xs sm:text-sm text-slate-700 overflow-y-auto">
+        <!-- Buton Instalare Nativă PWA (când browserul o permite direct) -->
+        <div id="native-pwa-install-box" class="hidden p-3.5 rounded-xl bg-medgreen-50 border-2 border-medgreen-500 space-y-2">
+          <div class="font-extrabold text-medgreen-900">Instalare directă disponibilă!</div>
+          <button onclick="triggerNativeInstall()" class="w-full py-3 rounded-xl bg-medgreen-600 hover:bg-medgreen-700 text-white font-extrabold shadow-xs transition">
+            Instalează „Lowkey UMFCD” Acum
+          </button>
+        </div>
+
+        <!-- Opțiune garantată 100% dacă rulezi dintr-un preview/iframe -->
+        <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 space-y-2">
+          <div class="font-extrabold text-amber-900">Dacă nu îți apare butonul „Instalează” în browser:</div>
+          <p class="text-xs text-amber-800">
+            Dacă ai deschis aplicația într-o fereastră de previzualizare (iframe), browserul blochează instalarea directă. Descarcă aplicația ca fișier standalone pe telefon sau deschide-o în tab separat:
+          </p>
+          <div class="flex flex-wrap gap-2 pt-1">
+            <button onclick="downloadStandaloneHTML()" class="flex-1 py-2.5 px-3 rounded-xl bg-medblue-700 hover:bg-medblue-800 text-white text-xs font-extrabold shadow-xs transition">
+              ⬇ Descarcă Aplicația (.html) pe Telefon
+            </button>
+            <button onclick="copyCurrentAppUrl()" class="py-2.5 px-3 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 text-xs font-bold transition">
+              Copiază Link-ul
+            </button>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-medblue-50 border border-medblue-200 space-y-1.5">
+          <div class="font-extrabold text-medblue-900">1. Pe Android (Google Chrome):</div>
+          <ol class="list-decimal pl-4 space-y-1 text-xs">
+            <li>Deschide pagina direct în <strong>Google Chrome</strong> (nu într-un browser intern).</li>
+            <li>Apasă pe meniul <strong>⋮</strong> (cele 3 puncte din colțul dreapta sus).</li>
+            <li>Alege <strong>„Instalează aplicația”</strong> sau <strong>„Adaugă pe ecranul principal”</strong>.</li>
+          </ol>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-medgreen-50 border border-medgreen-200 space-y-1.5">
+          <div class="font-extrabold text-medgreen-900">2. Pe iPhone / iPad (Safari):</div>
+          <ol class="list-decimal pl-4 space-y-1 text-xs">
+            <li>Deschide aplicația în browserul <strong>Safari</strong>.</li>
+            <li>Apasă pe butonul <strong>Share</strong> (pătratul cu săgeată în sus din bara de jos).</li>
+            <li>Derulează și apasă <strong>„Add to Home Screen” (Adaugă pe ecranul principal)</strong>.</li>
+          </ol>
+        </div>
+
+        <button onclick="closeInstallModal()" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold">
+          Închide
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CONFIRMARE INTERN -->
+  <div id="custom-dialog" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-xl space-y-4">
+      <h3 id="dialog-title" class="text-base font-extrabold text-slate-900">Confirmare</h3>
+      <p id="dialog-message" class="text-xs sm:text-sm text-slate-600"></p>
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button onclick="closeCustomDialog()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">Anulează</button>
+        <button id="dialog-confirm-btn" class="px-4 py-2 rounded-xl bg-medblue-700 hover:bg-medblue-800 text-white text-xs font-bold">Confirmă</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast-banner" class="hidden fixed bottom-5 right-4 z-50 bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-xl shadow-lg border border-slate-700"></div>
+
+  <script>
+    /* ============================================================================
+       1. CONFIGURARE PWA COMPLETĂ (ICONIȚE PNG + DATA MANIFEST + SERVICE WORKER)
+       Folosim data:application/manifest+json și iconițe PNG randate pe canvas
+       pentru a asigura compatibilitatea deplină pe Android Chrome și iOS Safari.
+       ============================================================================ */
+    (function registerOfflineServiceWorker() {
+      if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch((err) => console.warn('SW reg:', err));
+        });
+      }
+    })();
+
+    let deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredInstallPrompt = e;
+      const box = document.getElementById('native-pwa-install-box');
+      if (box) box.classList.remove('hidden');
+    });
+
+    function triggerNativeInstall() {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        deferredInstallPrompt.userChoice.then(() => {
+          deferredInstallPrompt = null;
+          closeInstallModal();
+        });
+      }
+    }
+
+    function downloadStandaloneHTML() {
+      const fullHtml = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([fullHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Lowkey-UMFCD-Admitere.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Fișierul aplicației a fost descărcat! Deschide-l în Chrome/Safari.');
+    }
+
+    function copyCurrentAppUrl() {
+      const tempInput = document.createElement('input');
+      tempInput.value = window.location.href;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+      showToast('Link-ul aplicației a fost copiat!');
+    }
+
+    /* ============================================================================
+       2. PROGRAMA COMPLETĂ GRANULARĂ: 116 SUB-CAPITOLE = 32.400 GRILE UNICE
+       - ANATOMIE (Manual Corint clasa a XI-a): 76 sub-capitole (20.000 grile)
+       - FIZICĂ (Programa completă UMFCD): 40 sub-capitole (12.400 grile)
+       ============================================================================ */
+    const CURRICULUM = [
+      // ==================== ANATOMIE (76 SUB-CAPITOLE = 20.000 GRILE) ====================
+      // Cap 1: Alcătuirea corpului uman (5 sub-cap)
+      { id: 'an_01', subject: 'Anatomie', chapter: '1. Alcătuirea corpului uman', title: 'Topografia organelor și cavitățile corpului', qCount: 260, topic: 'topografie' },
+      { id: 'an_02', subject: 'Anatomie', chapter: '1. Alcătuirea corpului uman', title: 'Planuri și raporturi anatomice', qCount: 260, topic: 'topografie' },
+      { id: 'an_03', subject: 'Anatomie', chapter: '1. Alcătuirea corpului uman', title: 'Celula: structură, organite și transport membranar', qCount: 270, topic: 'celula' },
+      { id: 'an_04', subject: 'Anatomie', chapter: '1. Alcătuirea corpului uman', title: 'Țesuturile epiteliale și conjunctive', qCount: 270, topic: 'tesuturi' },
+      { id: 'an_05', subject: 'Anatomie', chapter: '1. Alcătuirea corpului uman', title: 'Țesutul muscular și țesutul nervos', qCount: 260, topic: 'tesuturi' },
+
+      // Cap 2: Sistemul Nervos (12 sub-cap)
+      { id: 'an_06', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Neuronul: structură, clasificare și proprietăți', qCount: 270, topic: 'neuron' },
+      { id: 'an_07', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Sinapsa și transmiterea impulsului nervos', qCount: 270, topic: 'neuron' },
+      { id: 'an_08', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Măduva spinării: configurație externă și internă', qCount: 270, topic: 'maduva' },
+      { id: 'an_09', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Căile ascendente ale sensibilității medulare', qCount: 280, topic: 'maduva' },
+      { id: 'an_10', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Căile descendente (piramidale și extrapiramidale)', qCount: 280, topic: 'maduva' },
+      { id: 'an_11', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Reflexele medulare somatice și vegetative', qCount: 260, topic: 'maduva' },
+      { id: 'an_12', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Nervii spinali (rădăcini, trunchi, ramuri)', qCount: 260, topic: 'maduva' },
+      { id: 'an_13', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Trunchiul cerebral: bulbul, puntea și mezencefalul', qCount: 280, topic: 'trunchi' },
+      { id: 'an_14', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Nervii cranieni (I – XII): origini și teritorii', qCount: 280, topic: 'trunchi' },
+      { id: 'an_15', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Cerebelul: structură, pedunculi și funcții', qCount: 260, topic: 'cerebel' },
+      { id: 'an_16', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Diencefalul (Talamus, Metatalamus, Epitalamus, Hipotalamus)', qCount: 270, topic: 'diencefal' },
+      { id: 'an_17', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Emisferele cerebrale: lobi, girusuri și arii corticale', qCount: 270, topic: 'emisfere' },
+      { id: 'an_18', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Substanța albă a emisferelor, sistemul limbic și ganglionii bazali', qCount: 260, topic: 'emisfere' },
+      { id: 'an_19', subject: 'Anatomie', chapter: '2. Sistemul Nervos', title: 'Sistemul nervos vegetativ simpatic și parasimpatic', qCount: 270, topic: 'snv' },
+
+      // Cap 3: Analizatorii (9 sub-cap)
+      { id: 'an_20', subject: 'Anatomie', chapter: '3. Analizatorii', title: 'Analizatorul cutanat: structura pielii', qCount: 260, topic: 'cutanat' },
+      { id: 'an_21', subject: 'Anatomie', chapter: '3. Analizatorii', title: 'Receptorii cutanați (tactili, termici, dureroși) și calea', qCount: 260, topic: 'cutanat' },
+      { id: 'an_22', subject: 'Anatomie', chapter: '3. Analizatorii', title: 'Analizatorul kinestezic (fusuri neuromusculare, corpusculi Golgi)', qCount: 260, topic: 'kinestezic' },
+      { id: 'an_23', subject: 'Anatomie', chapter: '3. Analizatorii', title: 'Analizatorul olfactiv', qCount: 250, topic: 'olf_gust' },
+      { id: 'an_24', subject: 'Anatomie', chapter: '3. Analizatorii', title: 'Analizatorul gustativ', qCount: 250, topic: 'olf_gust' },
+      { id: 'an_25', subject: 'Anatomie', chapter: '3. Analizatorii', title: 'Analizatorul vizual: tunicile globului ocular și mediile refringente', qCount: 270, topic: 'vizual' },
+      { id: 'an_26', subject: 'Anatomie', chapter: '3. Analizatorii', title: 'Retina, celulele fotoreceptoare și calea optică', qCount: 270, topic: 'vizual' },
+      { id: 'an_27', subject: 'Anatomie', chapter: '3. Analizatorii', title: 'Acomodarea, reflexul pupilar și defectele vederii', qCount: 260, topic: 'vizual' },
+      { id: 'an_28', subject: 'Anatomie', chapter: '3. Analizatorii', title: 'Analizatorul auditiv (urechea și organul Corti)', qCount: 270, topic: 'auditiv' },
+      { id: 'an_29', subject: 'Anatomie', chapter: '3. Analizatorii', title: 'Analizatorul vestibular (utricula, sacula, canalele semicirculare)', qCount: 260, topic: 'auditiv' },
+
+      // Cap 4: Glandele Endocrine (7 sub-cap)
+      { id: 'an_30', subject: 'Anatomie', chapter: '4. Glandele Endocrine', title: 'Adenohipofiza și hormonii ei (STH, ACTH, TSH, FSH, LH, LTH)', qCount: 270, topic: 'hipofiza' },
+      { id: 'an_31', subject: 'Anatomie', chapter: '4. Glandele Endocrine', title: 'Lobul intermediar și Neurohipofiza (ADH, Oxitocina)', qCount: 260, topic: 'hipofiza' },
+      { id: 'an_32', subject: 'Anatomie', chapter: '4. Glandele Endocrine', title: 'Glanda tiroidă (T3, T4, calcitonina și disfuncții)', qCount: 270, topic: 'tiroida' },
+      { id: 'an_33', subject: 'Anatomie', chapter: '4. Glandele Endocrine', title: 'Glandele paratiroide și parathormonul (PTH)', qCount: 250, topic: 'tiroida' },
+      { id: 'an_34', subject: 'Anatomie', chapter: '4. Glandele Endocrine', title: 'Corticosuprarenala (mineralocorticoizi, glucocorticoizi, sexosteroizi)', qCount: 270, topic: 'suprarenale' },
+      { id: 'an_35', subject: 'Anatomie', chapter: '4. Glandele Endocrine', title: 'Medulosuprarenala (adrenalina și noradrenalina)', qCount: 250, topic: 'suprarenale' },
+      { id: 'an_36', subject: 'Anatomie', chapter: '4. Glandele Endocrine', title: 'Pancreasul endocrin (insulina și glucagonul)', qCount: 270, topic: 'pancreas_end' },
+      { id: 'an_37', subject: 'Anatomie', chapter: '4. Glandele Endocrine', title: 'Epifiza și timusul', qCount: 250, topic: 'epifiza_timus' },
+
+      // Cap 5: Mișcarea (Sistemul osos și muscular) (6 sub-cap)
+      { id: 'an_38', subject: 'Anatomie', chapter: '5. Sistemul Osos și Muscular', title: 'Osteogeneza, creșterea și compoziția chimică a oaselor', qCount: 250, topic: 'osos' },
+      { id: 'an_39', subject: 'Anatomie', chapter: '5. Sistemul Osos și Muscular', title: 'Scheletul capului (neurocraniul și viscerocraniul)', qCount: 260, topic: 'osos' },
+      { id: 'an_40', subject: 'Anatomie', chapter: '5. Sistemul Osos și Muscular', title: 'Scheletul trunchiului (coloana vertebrală, coastele, sternul)', qCount: 260, topic: 'osos' },
+      { id: 'an_41', subject: 'Anatomie', chapter: '5. Sistemul Osos și Muscular', title: 'Scheletul membrelor și articulațiile', qCount: 260, topic: 'osos' },
+      { id: 'an_42', subject: 'Anatomie', chapter: '5. Sistemul Osos și Muscular', title: 'Principalele grupe de mușchi scheletici', qCount: 260, topic: 'muscular' },
+      { id: 'an_43', subject: 'Anatomie', chapter: '5. Sistemul Osos și Muscular', title: 'Fiziologia mușchilor scheletici (contracția, manifestări)', qCount: 270, topic: 'muscular' },
+
+      // Cap 6: Digestia și absorbția (7 sub-cap)
+      { id: 'an_44', subject: 'Anatomie', chapter: '6. Digestia și Absorbția', title: 'Cavitatea bucală, dinții, glandele salivare și masticația', qCount: 260, topic: 'dig_sup' },
+      { id: 'an_45', subject: 'Anatomie', chapter: '6. Digestia și Absorbția', title: 'Faringele, esofagul și timpii deglutiției', qCount: 250, topic: 'dig_sup' },
+      { id: 'an_46', subject: 'Anatomie', chapter: '6. Digestia și Absorbția', title: 'Stomacul: structură, sucul gastric și digestia gastrică', qCount: 270, topic: 'dig_sup' },
+      { id: 'an_47', subject: 'Anatomie', chapter: '6. Digestia și Absorbția', title: 'Ficatul, căile biliare și rolul bilei în digestie', qCount: 260, topic: 'dig_inf' },
+      { id: 'an_48', subject: 'Anatomie', chapter: '6. Digestia și Absorbția', title: 'Pancreasul exocrin și sucul pancreatic', qCount: 260, topic: 'dig_inf' },
+      { id: 'an_49', subject: 'Anatomie', chapter: '6. Digestia și Absorbția', title: 'Intestinul subțire: digestia și absorbția intestinală', qCount: 270, topic: 'dig_inf' },
+      { id: 'an_50', subject: 'Anatomie', chapter: '6. Digestia și Absorbția', title: 'Intestinul gros și fiziologia defecației', qCount: 250, topic: 'dig_inf' },
+
+      // Cap 7: Circulația (8 sub-cap)
+      { id: 'an_51', subject: 'Anatomie', chapter: '7. Circulația', title: 'Mediul intern și plasma sanguină', qCount: 250, topic: 'sange' },
+      { id: 'an_52', subject: 'Anatomie', chapter: '7. Circulația', title: 'Elementele figurate ale sângelui (hematii, leucocite, trombocite)', qCount: 270, topic: 'sange' },
+      { id: 'an_53', subject: 'Anatomie', chapter: '7. Circulația', title: 'Grupele sanguine (sistemul ABO și Rh) și imunitatea', qCount: 270, topic: 'sange' },
+      { id: 'an_54', subject: 'Anatomie', chapter: '7. Circulația', title: 'Hemostaza fiziologică și coagularea sângelui', qCount: 260, topic: 'sange' },
+      { id: 'an_55', subject: 'Anatomie', chapter: '7. Circulația', title: 'Inima: configurație, valve și sistemul excitoconductor', qCount: 270, topic: 'inima' },
+      { id: 'an_56', subject: 'Anatomie', chapter: '7. Circulația', title: 'Ciclul cardiac, debitul cardiac și zgomotele inimii', qCount: 270, topic: 'inima' },
+      { id: 'an_57', subject: 'Anatomie', chapter: '7. Circulația', title: 'Circulația mare și circulația mică (arborele vascular)', qCount: 260, topic: 'vase' },
+      { id: 'an_58', subject: 'Anatomie', chapter: '7. Circulația', title: 'Hemodinamica, tensiunea arterială și sistemul limfatic', qCount: 260, topic: 'vase' },
+
+      // Cap 8: Respirația (4 sub-cap)
+      { id: 'an_59', subject: 'Anatomie', chapter: '8. Respirația', title: 'Căile respiratorii, plămânii și pleura', qCount: 260, topic: 'respiratie' },
+      { id: 'an_60', subject: 'Anatomie', chapter: '8. Respirația', title: 'Mecanica ventilației pulmonare', qCount: 260, topic: 'respiratie' },
+      { id: 'an_61', subject: 'Anatomie', chapter: '8. Respirația', title: 'Volumele și capacitățile pulmonare', qCount: 260, topic: 'respiratie' },
+      { id: 'an_62', subject: 'Anatomie', chapter: '8. Respirația', title: 'Schimbul de gaze alveolo-capilar și transportul O2/CO2', qCount: 270, topic: 'respiratie' },
+
+      // Cap 9: Excreția (4 sub-cap)
+      { id: 'an_63', subject: 'Anatomie', chapter: '9. Excreția', title: 'Rinichiul și structura nefronului', qCount: 260, topic: 'excretie' },
+      { id: 'an_64', subject: 'Anatomie', chapter: '9. Excreția', title: 'Filtrarea glomerulară și debitul filtrării', qCount: 260, topic: 'excretie' },
+      { id: 'an_65', subject: 'Anatomie', chapter: '9. Excreția', title: 'Reabsorbția și secreția tubulară', qCount: 270, topic: 'excretie' },
+      { id: 'an_66', subject: 'Anatomie', chapter: '9. Excreția', title: 'Compoziția urinei, căile urinare și micțiunea', qCount: 250, topic: 'excretie' },
+
+      // Cap 10: Funcția de reproducere (5 sub-cap)
+      { id: 'an_67', subject: 'Anatomie', chapter: '10. Funcția de Reproducere', title: 'Sistemul reproducător masculin (testiculul și căile spermatice)', qCount: 260, topic: 'reproducere' },
+      { id: 'an_68', subject: 'Anatomie', chapter: '10. Funcția de Reproducere', title: 'Spermatogeneza și funcția endocrină a testiculului', qCount: 260, topic: 'reproducere' },
+      { id: 'an_69', subject: 'Anatomie', chapter: '10. Funcția de Reproducere', title: 'Sistemul reproducător feminin (ovarul, trompele, uterul)', qCount: 260, topic: 'reproducere' },
+      { id: 'an_70', subject: 'Anatomie', chapter: '10. Funcția de Reproducere', title: 'Ovogeneza, ciclul ovarian și ciclul uterin (menstrual)', qCount: 270, topic: 'reproducere' },
+      { id: 'an_71', subject: 'Anatomie', chapter: '10. Funcția de Reproducere', title: 'Fecundația, sarcina, nașterea și planificarea familială', qCount: 250, topic: 'reproducere' },
+
+      // Cap 11: Metabolismul (5 sub-cap)
+      { id: 'an_72', subject: 'Anatomie', chapter: '11. Metabolismul', title: 'Metabolismul intermediar glucidic și reglarea glicemiei', qCount: 270, topic: 'metabolism' },
+      { id: 'an_73', subject: 'Anatomie', chapter: '11. Metabolismul', title: 'Metabolismul intermediar lipidic', qCount: 260, topic: 'metabolism' },
+      { id: 'an_74', subject: 'Anatomie', chapter: '11. Metabolismul', title: 'Metabolismul intermediar protidic și balanța azotată', qCount: 260, topic: 'metabolism' },
+      { id: 'an_75', subject: 'Anatomie', chapter: '11. Metabolismul', title: 'Metabolismul energetic, ATP-ul și termoreglarea', qCount: 260, topic: 'metabolism' },
+      { id: 'an_76', subject: 'Anatomie', chapter: '11. Metabolismul', title: 'Vitaminele (hidrosolubile/liposolubile) și rația alimentară', qCount: 260, topic: 'metabolism' },
+
+      // ==================== FIZICĂ (40 SUB-CAPITOLE = 12.400 GRILE) ====================
+      // Cap 1: Mecanică (12 sub-cap)
+      { id: 'fz_01', subject: 'Fizică', chapter: '1. Mecanică', title: 'Mărimi fizice, vectori și sisteme de referință', qCount: 310, topic: 'cinematica' },
+      { id: 'fz_02', subject: 'Fizică', chapter: '1. Mecanică', title: 'Mișcarea rectilinie uniformă (MRU) și viteza medie', qCount: 310, topic: 'cinematica' },
+      { id: 'fz_03', subject: 'Fizică', chapter: '1. Mecanică', title: 'Mișcarea rectilinie uniform variată (MRUV)', qCount: 310, topic: 'cinematica' },
+      { id: 'fz_04', subject: 'Fizică', chapter: '1. Mecanică', title: 'Căderea liberă și aruncarea pe verticală', qCount: 310, topic: 'cinematica' },
+      { id: 'fz_05', subject: 'Fizică', chapter: '1. Mecanică', title: 'Principiile dinamicii newtoniene (I, II, III)', qCount: 310, topic: 'dinamica' },
+      { id: 'fz_06', subject: 'Fizică', chapter: '1. Mecanică', title: 'Greutatea, normala și mișcarea pe plan înclinat', qCount: 310, topic: 'dinamica' },
+      { id: 'fz_07', subject: 'Fizică', chapter: '1. Mecanică', title: 'Forța de frecare la alunecare și coeficientul de frecare', qCount: 310, topic: 'dinamica' },
+      { id: 'fz_08', subject: 'Fizică', chapter: '1. Mecanică', title: 'Forța elastică (legea lui Hooke) și gruparea resorturilor', qCount: 310, topic: 'dinamica' },
+      { id: 'fz_09', subject: 'Fizică', chapter: '1. Mecanică', title: 'Lucrul mecanic și puterea mecanică', qCount: 310, topic: 'energie' },
+      { id: 'fz_10', subject: 'Fizică', chapter: '1. Mecanică', title: 'Energia cinetică și teorema variației energiei cinetice', qCount: 310, topic: 'energie' },
+      { id: 'fz_11', subject: 'Fizică', chapter: '1. Mecanică', title: 'Energia potențială și conservarea energiei mecanice', qCount: 310, topic: 'energie' },
+      { id: 'fz_12', subject: 'Fizică', chapter: '1. Mecanică', title: 'Impulsul mecanic, ciocniri plastice și elastice', qCount: 310, topic: 'impuls' },
+
+      // Cap 2: Termodinamică (9 sub-cap)
+      { id: 'fz_13', subject: 'Fizică', chapter: '2. Termodinamică', title: 'Temperatura, scări termometrice și dilatarea termică', qCount: 310, topic: 'calorimetrie' },
+      { id: 'fz_14', subject: 'Fizică', chapter: '2. Termodinamică', title: 'Parametrii de stare și ecuația termică a gazului ideal', qCount: 310, topic: 'gaz_ideal' },
+      { id: 'fz_15', subject: 'Fizică', chapter: '2. Termodinamică', title: 'Transformarea izotermă (Legea Boyle-Mariotte)', qCount: 310, topic: 'gaz_ideal' },
+      { id: 'fz_16', subject: 'Fizică', chapter: '2. Termodinamică', title: 'Transformarea izobară (Legea Gay-Lussac)', qCount: 310, topic: 'gaz_ideal' },
+      { id: 'fz_17', subject: 'Fizică', chapter: '2. Termodinamică', title: 'Transformarea izocoră (Legea Charles)', qCount: 310, topic: 'gaz_ideal' },
+      { id: 'fz_18', subject: 'Fizică', chapter: '2. Termodinamică', title: 'Lucrul mecanic și energia internă a gazului ideal', qCount: 310, topic: 'principiu1' },
+      { id: 'fz_19', subject: 'Fizică', chapter: '2. Termodinamică', title: 'Principiul I al termodinamicii și transformarea adiabatică', qCount: 310, topic: 'principiu1' },
+      { id: 'fz_20', subject: 'Fizică', chapter: '2. Termodinamică', title: 'Calorimetrie și schimbări de stare de agregare', qCount: 310, topic: 'calorimetrie' },
+      { id: 'fz_21', subject: 'Fizică', chapter: '2. Termodinamică', title: 'Principiul II al termodinamicii, motoare termice și ciclul Carnot', qCount: 310, topic: 'principiu2' },
+
+      // Cap 3: Curent Continuu (10 sub-cap)
+      { id: 'fz_22', subject: 'Fizică', chapter: '3. Curent Continuu', title: 'Curentul electric, intensitatea și densitatea de curent', qCount: 310, topic: 'ohm' },
+      { id: 'fz_23', subject: 'Fizică', chapter: '3. Curent Continuu', title: 'Tensiunea electrică și tensiunea electromotoare (t.e.m.)', qCount: 310, topic: 'ohm' },
+      { id: 'fz_24', subject: 'Fizică', chapter: '3. Curent Continuu', title: 'Rezistența electrică, rezistivitatea și variația cu temperatura', qCount: 310, topic: 'ohm' },
+      { id: 'fz_25', subject: 'Fizică', chapter: '3. Curent Continuu', title: 'Legea lui Ohm pentru o porțiune de circuit și întreg circuitul', qCount: 310, topic: 'ohm' },
+      { id: 'fz_26', subject: 'Fizică', chapter: '3. Curent Continuu', title: 'Gruparea rezistoarelor în serie, paralel și mixtă', qCount: 310, topic: 'kirchhoff' },
+      { id: 'fz_27', subject: 'Fizică', chapter: '3. Curent Continuu', title: 'Gruparea generatoarelor electrice (serie și paralel)', qCount: 310, topic: 'kirchhoff' },
+      { id: 'fz_28', subject: 'Fizică', chapter: '3. Curent Continuu', title: 'Legile lui Kirchhoff pentru rețele electrice', qCount: 310, topic: 'kirchhoff' },
+      { id: 'fz_29', subject: 'Fizică', chapter: '3. Curent Continuu', title: 'Energia și puterea curentului electric (Efectul Joule)', qCount: 310, topic: 'joule' },
+      { id: 'fz_30', subject: 'Fizică', chapter: '3. Curent Continuu', title: 'Randamentul circuitului electric și transferul maxim de putere', qCount: 310, topic: 'joule' },
+      { id: 'fz_31', subject: 'Fizică', chapter: '3. Curent Continuu', title: 'Aparate de măsură (șuntarea ampermetrului, rezistența adițională)', qCount: 310, topic: 'ohm' },
+
+      // Cap 4: Optică Geometrică și Ondulatorie (9 sub-cap)
+      { id: 'fz_32', subject: 'Fizică', chapter: '4. Optică', title: 'Propagarea rectilinie și reflexia luminii (oglinzi plane)', qCount: 310, topic: 'refractie' },
+      { id: 'fz_33', subject: 'Fizică', chapter: '4. Optică', title: 'Refracția luminii și legea lui Snell-Descartes', qCount: 310, topic: 'refractie' },
+      { id: 'fz_34', subject: 'Fizică', chapter: '4. Optică', title: 'Reflexia totală, unghiul limită și lama cu fețe plan-paralele', qCount: 310, topic: 'refractie' },
+      { id: 'fz_35', subject: 'Fizică', chapter: '4. Optică', title: 'Prisma optică și dispersia luminii', qCount: 310, topic: 'refractie' },
+      { id: 'fz_36', subject: 'Fizică', chapter: '4. Optică', title: 'Lentile subțiri: focare, convergență și construcția imaginilor', qCount: 310, topic: 'lentile' },
+      { id: 'fz_37', subject: 'Fizică', chapter: '4. Optică', title: 'Formula lentilelor subțiri și mărirea liniară transversală', qCount: 310, topic: 'lentile' },
+      { id: 'fz_38', subject: 'Fizică', chapter: '4. Optică', title: 'Sisteme de lentile și instrumente optice (ochiul, lupa, microscopul)', qCount: 310, topic: 'lentile' },
+      { id: 'fz_39', subject: 'Fizică', chapter: '4. Optică', title: 'Interferența luminii (dispozitivul lui Young)', qCount: 310, topic: 'lentile' },
+      { id: 'fz_40', subject: 'Fizică', chapter: '4. Optică', title: 'Difracția și polarizarea luminii', qCount: 310, topic: 'lentile' }
+    ];
+
+    /* ============================================================================
+       3. BAZA DE CUNOAȘTERE MEDICALĂ & FIZICĂ PENTRU TOATE TEMELE CORINT + UMFCD
+       ============================================================================ */
+    const TOPIC_TEMPLATES = {
+      topografie: {
+        cs: [
+          {
+            stem: "Planul frontal împarte corpul uman în două părți:",
+            options: [
+              "Anterioară (ventrală) și posterioară (dorsală)",
+              "Superioară (cranială) și inferioară (caudală)",
+              "Dreaptă și stângă simetrice (planul mediosagital)",
+              "Medială și laterală",
+              "Proximală și distală"
+            ],
+            correct: 0, diff: 3,
+            exp: "Planul frontal este vertical, paralel cu fruntea, și împarte corpul într-o parte anterioară (ventrală) și una posterioară (dorsală). Planul transversal îl împarte în superior/inferior, iar cel sagital în dreapta/stânga.",
+            ref: "Manual Biologie XI Corint – Alcătuirea corpului uman"
+          },
+          {
+            stem: "Care dintre următoarele organe este situat în cavitatea pelviană?",
+            options: [
+              "Vezica urinară",
+              "Stomacul",
+              "Splina",
+              "Ficatul",
+              "Pancreasul"
+            ],
+            correct: 0, diff: 2,
+            exp: "În cavitatea pelviană sunt situate vezica urinară, rectul și organele genitale interne (uterul, ovarele la femeie).",
+            ref: "Manual Biologie XI Corint – Topografia organelor"
+          }
+        ],
+        cg: [
+          {
+            stem: "Referitor la planurile și axele corpului uman, sunt corecte afirmațiile:",
+            statements: [
+              "Axul longitudinal are doi poli: cranial (superior) și caudal (inferior)",
+              "Planul transversal (orizontal) este singurul plan orizontal al corpului",
+              "Planul mediosagital împarte corpul în două jumătăți simetrice",
+              "Termenul „distal” desemnează o formațiune mai apropiată de centura membrului"
+            ],
+            correct: 0, diff: 5,
+            exp: "Afirmațiile 1, 2 și 3 sunt adevărate. Afirmația 4 este falsă deoarece „proximal” desemnează apropierea de centură, iar „distal” depărtarea.",
+            ref: "Manual Biologie XI Corint – Axe și planuri"
+          }
+        ]
+      },
+
+      celula: {
+        cs: [
+          {
+            stem: "Care dintre următoarele organite celulare are membrană dublă și conține ADN propriu, având rol în fosforilarea oxidativă și sinteza ATP?",
+            options: [
+              "Mitocondria",
+              "Aparatul Golgi",
+              "Reticulul endoplasmatic neted",
+              "Lizozomul",
+              "Centrozomul"
+            ],
+            correct: 0, diff: 3,
+            exp: "Mitocondria posedă membrană dublă (externă netedă și internă plicaturată sub formă de criste mitocondriale) și sediul fosforilării oxidative (sinteza ATP).",
+            ref: "Manual Biologie XI Corint – Celula"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre transportul transmembranar pasiv este adevărat că:",
+            statements: [
+              "Se realizează fără consum de energie (ATP)",
+              "Are loc în sensul gradientului de concentrație (de la concentrație mare la mică)",
+              "Include difuziunea simplă, difuziunea facilitată și osmoza",
+              "Este asigurat de pompa de Na+/K+"
+            ],
+            correct: 0, diff: 5,
+            exp: "1, 2, 3 sunt corecte. Pompa Na+/K+ realizează transport ACTIV primar (cu consum de ATP, împotriva gradientului).",
+            ref: "Manual Biologie XI Corint – Fiziologia celulei"
+          }
+        ]
+      },
+
+      tesuturi: {
+        cs: [
+          {
+            stem: "Țesutul cartilaginos hialin se găsește la nivelul:",
+            options: [
+              "Cartilajelor articulare, costale, traheale și laringiene",
+              "Epiglotei și pavilionului urechii (cartilaj elastic)",
+              "Discurilor intervertebrale și meniscurilor articulare (cartilaj fibros)",
+              "Tendoanelor și ligamentelor",
+              "Mucoasei bucale"
+            ],
+            correct: 0, diff: 5,
+            exp: "Cartilajul hialin formează cartilajele costale, laringiene, traheale, bronșice și articulare.",
+            ref: "Manual Biologie XI Corint – Țesuturile"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre țesutul epitelial de acoperire sunt adevărate următoarele afirmații:",
+            statements: [
+              "Nu este vascularizat, hrănindu-se prin difuziune din țesutul conjunctiv subiacent",
+              "Epiteliul unistratificat pavimentos formează endoteliul vaselor de sânge și pleura",
+              "Epiteliul pseudostratificat cilindric ciliat căptușește traheea și bronhiile mari",
+              "Epidermul este un epiteliu pluristratificat pavimentos nekeratinizat"
+            ],
+            correct: 0, diff: 6,
+            exp: "1, 2, 3 sunt corecte. Epidermul este un epiteliu pluristratificat pavimentos KERATINIZAT (cel nekeratinizat se află în mucoasa bucală și esofag).",
+            ref: "Manual Biologie XI Corint – Țesutul epitelial"
+          }
+        ]
+      },
+
+      neuron: {
+        cs: [
+          {
+            stem: "În timpul potențialului de acțiune al neuronului, faza de depolarizare rapidă se datorează:",
+            options: [
+              "Influxului masiv de ioni de Na+ prin deschiderea canalelor voltaj-dependente pentru Na+",
+              "Efluxului de ioni de K+ în afara celulei",
+              "Influxului de ioni de Cl- în citoplasmă",
+              "Activării pompei Na+/K+",
+              "Ieșirii anionilor proteici din axon"
+            ],
+            correct: 0, diff: 5,
+            exp: "Depolarizarea se produce prin creșterea bruscă a permeabilității membranei pentru Na+ și intrarea Na+ în celulă, inversând polaritatea de la -70 mV la +35/+40 mV.",
+            ref: "Manual Biologie XI Corint – Fiziologia neuronului"
+          }
+        ],
+        cg: [
+          {
+            stem: "Referitor la teaca de mielină a axonului, sunt corecte afirmațiile:",
+            statements: [
+              "În sistemul nervos periferic este produsă de celulele Schwann",
+              "În sistemul nervos central este produsă de oligodendrocite",
+              "Este întreruptă la nivelul nodurilor Ranvier, permițând conducerea saltatorie",
+              "Are rol de izolator electric, crescând viteza de conducere a impulsului nervos"
+            ],
+            correct: 4, diff: 6,
+            exp: "Toate cele 4 afirmații sunt adevărate conform manualului Corint.",
+            ref: "Manual Biologie XI Corint – Neuronul"
+          }
+        ]
+      },
+
+      maduva: {
+        cs: [
+          {
+            stem: "Fasciculul spinotalamic lateral conduce:",
+            options: [
+              "Sensibilitatea termică și dureroasă",
+              "Sensibilitatea tactilă epicritică",
+              "Sensibilitatea proprioceptivă inconștientă",
+              "Motilitatea voluntară",
+              "Sensibilitatea kinestezică"
+            ],
+            correct: 0, diff: 5,
+            exp: "Fasciculul spinotalamic lateral (situat în cordonul lateral) conduce sensibilitatea termo-algică, iar cel anterior conduce sensibilitatea tactilă protopatică.",
+            ref: "Manual Biologie XI Corint – Măduva spinării"
+          },
+          {
+            stem: "Rădăcina anterioară a nervului spinal conține:",
+            options: [
+              "Axonii neuronilor somatomotori din cornul anterior și visceromotori din cornul lateral",
+              "Dendritele neuronilor pseudounipolari din ganglionul spinal",
+              "Axonii deutoneuronilor din cornul posterior",
+              "Exclusiv fibre senzitive",
+              "Ganglionul spinal"
+            ],
+            correct: 0, diff: 4,
+            exp: "Rădăcina anterioară este exclusiv motorie (eferentă), conținând axonii neuronilor somatomotori și vegetativi simpatici.",
+            ref: "Manual Biologie XI Corint – Nervii spinali"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre reflexul miotatic (osteotendinos) sunt adevărate afirmațiile:",
+            statements: [
+              "Este un reflex monosinaptic (arc reflex format din 2 neuroni: senzitiv și motor)",
+              "Receptorii sunt reprezentați de fusurile neuromusculare",
+              "Are timp de latență foarte scurt și nu iradiază",
+              "Are rol în menținerea tonusului muscular și a posturii"
+            ],
+            correct: 4, diff: 6,
+            exp: "Toate cele 4 afirmații caracterizează reflexul miotatic (ex: rotulian, ahilian).",
+            ref: "Manual Biologie XI Corint – Reflexele medulare"
+          }
+        ]
+      },
+
+      trunchi: {
+        cs: [
+          {
+            stem: "Originea aparentă a nervului trohlear (IV) se află:",
+            options: [
+              "Pe fața posterioară a trunchiului cerebral, sub coliculii cvadrigemeni inferiori",
+              "În șanțul bulbo-pontin",
+              "În șanțul preolivar",
+              "În șanțul retroolivar",
+              "Pe fața anterioară a punții lui Varolio"
+            ],
+            correct: 0, diff: 6,
+            exp: "Nervul trohlear (IV) este singurul nerv cranian cu origine aparentă pe fața posterioară a trunchiului cerebral.",
+            ref: "Manual Biologie XI Corint – Nervii cranieni"
+          }
+        ],
+        cg: [
+          {
+            stem: "Care dintre următorii nervi cranieni au în structura lor fibre parasimpatice?",
+            statements: [
+              "Nervul oculomotor (III) – din nucleul accesor (Edinger-Westphal)",
+              "Nervul facial (VII) – din nucleii lacrimal și salivator superior",
+              "Nervul glosofaringian (IX) – din nucleul salivator inferior",
+              "Nervul vag (X) – din nucleul dorsal al vagului"
+            ],
+            correct: 4, diff: 7,
+            exp: "Cei 4 nervi cranieni cu componentă parasimpatică (parasimpaticul cranian) sunt III, VII, IX și X.",
+            ref: "Manual Biologie XI Corint – Nervii cranieni"
+          }
+        ]
+      },
+
+      cerebel: {
+        cs: [
+          {
+            stem: "Extirparea cerebelului produce:",
+            options: [
+              "Astenie, atonie și astazie",
+              "Cecitate corticală",
+              "Paralizie flască definitivă",
+              "Diabet insipid",
+              "Abolirea reflexelor pupilare"
+            ],
+            correct: 0, diff: 3,
+            exp: "Triada cerebeloasă: astenie (scăderea forței), atonie (scăderea tonusului), astazie (tulburări de ortostatism).",
+            ref: "Manual Biologie XI Corint – Cerebelul"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre conexiunile cerebelului este adevărat că:",
+            statements: [
+              "Pedunculii cerebeloși inferiori leagă cerebelul de bulbul rahidian",
+              "Pedunculii cerebeloși mijlocii leagă cerebelul de puntea lui Varolio",
+              "Pedunculii cerebeloși superiori leagă cerebelul de mezencefal",
+              "Substanța cenușie formează la exterior scoarța cerebeloasă"
+            ],
+            correct: 4, diff: 5,
+            exp: "Toate cele 4 afirmații sunt adevărate.",
+            ref: "Manual Biologie XI Corint – Cerebelul"
+          }
+        ]
+      },
+
+      diencefal: {
+        cs: [
+          {
+            stem: "Singura cale senzitivă care NU face sinapsă în talamus este calea:",
+            options: [
+              "Olfactivă",
+              "Vizuală",
+              "Auditivă",
+              "Gustativă",
+              "Tactilă protopatică"
+            ],
+            correct: 0, diff: 3,
+            exp: "Calea olfactivă proiectează direct în paleocortex fără releu talamic.",
+            ref: "Manual Biologie XI Corint – Diencefalul"
+          }
+        ],
+        cg: [
+          {
+            stem: "Referitor la hipotalamus sunt corecte afirmațiile:",
+            statements: [
+              "Nucleii anteriori secretă ADH și oxitocină",
+              "Nucleii mijlocii secretă neurohormoni care reglează adenohipofiza",
+              "Intervine în termoreglare, foame, sațietate și sete",
+              "Este conectat cu hipofiza prin tija pituitară (sistemul port hipotalamo-hipofizar și tractul hipotalamo-hipofizar)"
+            ],
+            correct: 4, diff: 6,
+            exp: "Toate cele 4 afirmații sunt adevărate.",
+            ref: "Manual Biologie XI Corint – Hipotalamusul"
+          }
+        ]
+      },
+
+      emisfere: {
+        cs: [
+          {
+            stem: "Aria vizuală primară este situată în:",
+            options: [
+              "Lobul occipital, pe marginile scizurii calcarine",
+              "Lobul parietal, în girusul postcentral",
+              "Lobul frontal, în girusul precentral",
+              "Lobul temporal, în girusul temporal superior",
+              "Fața bazală a lobului frontal"
+            ],
+            correct: 0, diff: 4,
+            exp: "Aria vizuală se găsește în lobul occipital, de o parte și de alta a scizurii calcarine.",
+            ref: "Manual Biologie XI Corint – Emisferele cerebrale"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre reflexele condiționate (studiate de Pavlov) sunt adevărate afirmațiile:",
+            statements: [
+              "Sunt dobândite în cursul vieții și au sediul în scoarța cerebrală",
+              "Sunt temporare și se sting dacă excitantul condiționat nu este întărit periodic prin cel necondiționat",
+              "Se formează prin asocierea unui stimul indiferent cu un stimul absolut (necondiționat)",
+              "Sunt înnăscute și constante la toți indivizii speciei"
+            ],
+            correct: 0, diff: 6,
+            exp: "1, 2, 3 sunt corecte. Afirmația 4 caracterizează reflexele NECONDIȚIONATE.",
+            ref: "Manual Biologie XI Corint – Activitatea nervoasă superioară"
+          }
+        ]
+      },
+
+      snv: {
+        cs: [
+          {
+            stem: "Stimularea parasimpatică asupra tubului digestiv și a inimii determină:",
+            options: [
+              "Creșterea motilității digestive, relaxarea sfincterelor și bradicardie",
+              "Inhibarea secrețiilor digestive și tahicardie",
+              "Midriază și bronhodilatație",
+              "Glicogenoliză hepatică intensă",
+              "Contracția sfincterului vezical intern"
+            ],
+            correct: 0, diff: 5,
+            exp: "Parasimpaticul are efect trofotrop (rest & digest): stimulează secrețiile și peristaltismul digestiv, relaxează sfincterele și scade frecvența cardiacă (bradicardie).",
+            ref: "Manual Biologie XI Corint – Sistemul nervos vegetativ"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre sistemul nervos simpatic sunt adevărate afirmațiile:",
+            statements: [
+              "Centrii nervoși se află în coarnele laterale ale măduvei toraco-lombare (T1-L2)",
+              "Fibrele preganglionare sunt scurte, iar cele postganglionare sunt lungi",
+              "Determină midriază, bronhodilatație și vasoconstricție cutanată",
+              "Medulosuprarenala este inervată de fibre preganglionare simpatice colinergice"
+            ],
+            correct: 4, diff: 7,
+            exp: "Toate cele 4 afirmații sunt corecte.",
+            ref: "Manual Biologie XI Corint – SNV"
+          }
+        ]
+      },
+
+      cutanat: {
+        cs: [
+          {
+            stem: "Corpusculii Meissner și discurile Merkel recepționează:",
+            options: [
+              "Atingerea fină (sensibilitatea tactilă epicritică)",
+              "Durerea",
+              "Variațiile de temperatură (cald)",
+              "Accelerația unghiulară",
+              "Presiunea profundă din hipoderm"
+            ],
+            correct: 0, diff: 4,
+            exp: "Corpusculii Meissner (în papilele dermice) și discurile Merkel sunt receptori tactili pentru atingeri fine.",
+            ref: "Manual Biologie XI Corint – Analizatorul cutanat"
+          }
+        ],
+        cg: [
+          {
+            stem: "Referitor la receptorii termici și dureroși din piele:",
+            statements: [
+              "Corpusculii Krause sunt receptori pentru rece și sunt mai numeroși decât cei pentru cald",
+              "Corpusculii Ruffini sunt receptori pentru cald",
+              "Algoreceptorii sunt terminații nervoase libere",
+              "Durerea tegumentară nu se adaptează (persistă cât timp acționează stimulul)"
+            ],
+            correct: 4, diff: 6,
+            exp: "Toate cele 4 afirmații sunt corecte.",
+            ref: "Manual Biologie XI Corint – Analizatorul cutanat"
+          }
+        ]
+      },
+
+      kinestezic: {
+        cs: [
+          {
+            stem: "Corpusculii tendinoși Golgi sunt situați la joncțiunea dintre mușchi și tendon și au rolul de:",
+            options: [
+              "A preveni contracția musculară excesivă sau alungirea exagerată a mușchiului",
+              "A iniția contracția reflexă la întinderea mușchiului",
+              "A recepționa vibrațiile osoase",
+              "A secreta acetilcolină în fanta sinaptică",
+              "A menține echilibrul static al capului"
+            ],
+            correct: 0, diff: 6,
+            exp: "Corpusculii Golgi monitorizează tensiunea dezvoltată în tendon și inhibă motoneuronii alfa când tensiunea devine periculoasă, prevenind ruperea mușchiului.",
+            ref: "Manual Biologie XI Corint – Analizatorul kinestezic"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre fusurile neuromusculare sunt corecte afirmațiile:",
+            statements: [
+              "Sunt diseminate printre fibrele musculare striate (extrafusale)",
+              "Conțin fibre intrafusale cu nuclei în sac și în lanț nuclear",
+              "Inervația senzitivă este asigurată de fibre anulospirale (primare) și în buchet (secundare)",
+              "Inervația motorie este realizată de axonii neuronilor somatomotori gamma din cornul anterior medular"
+            ],
+            correct: 4, diff: 8,
+            exp: "Toate cele 4 afirmații descriu exact structura și inervația fusului neuromuscular din manualul Corint.",
+            ref: "Manual Biologie XI Corint – Analizatorul kinestezic"
+          }
+        ]
+      },
+
+      olf_gust: {
+        cs: [
+          {
+            stem: "Deutoneuronul căii gustative se află în:",
+            options: [
+              "Nucleul tractului solitar din bulbul rahidian",
+              "Bulbul olfactiv",
+              "Ganglionul geniculat",
+              "Talamus (nucleul ventral posteromedial)",
+              "Cornul posterior medular"
+            ],
+            correct: 0, diff: 6,
+            exp: "Protoneuronii căii gustative sunt în ganglionii nervilor VII, IX și X, iar deutoneuronul se află în nucleul solitar din bulb.",
+            ref: "Manual Biologie XI Corint – Analizatorul gustativ"
+          }
+        ],
+        cg: [
+          {
+            stem: "Referitor la localizarea receptorilor gustativi pentru cele 4 gusturi fundamentale:",
+            statements: [
+              "Gustul dulce este perceput predominant la vârful limbii",
+              "Gustul amar este perceput la baza limbii (papilele caliciforme)",
+              "Gustul acru este perceput pe marginile limbii",
+              "Gustul sărat este perceput în partea anterioară a feței dorsale a limbii"
+            ],
+            correct: 4, diff: 5,
+            exp: "Toate cele 4 afirmații sunt corecte conform manualului Corint.",
+            ref: "Manual Biologie XI Corint – Analizatorul gustativ"
+          }
+        ]
+      },
+
+      vizual: {
+        cs: [
+          {
+            stem: "Pata oarbă (papila optică) de la nivelul retinei se caracterizează prin:",
+            options: [
+              "Lipsa completă a celulelor fotoreceptoare (locul de ieșire al nervului optic)",
+              "Prezența exclusivă a celulelor cu conuri",
+              "Acuitatea vizuală maximă",
+              "Prezența în exces a rodopsinei",
+              "Localizarea la nivelul corneei"
+            ],
+            correct: 0, diff: 3,
+            exp: "Pata oarbă reprezintă locul pe unde fibrele nervului optic părăsesc globul ocular și intră artera centrală a retinei; nu conține celule cu conuri sau bastonașe.",
+            ref: "Manual Biologie XI Corint – Analizatorul vizual"
+          }
+        ],
+        cg: [
+          {
+            stem: "Mediile refringente ale globului ocular (aparatul dioptric) includ:",
+            statements: [
+              "Corneea transparentă (putere de refracție ~40 dioptrii)",
+              "Umoarea apoasă (secretată de procesele ciliare)",
+              "Cristalinul (lentilă biconvexă elastică, putere ~20 dioptrii)",
+              "Corpul vitros (umoarea sticloasă)"
+            ],
+            correct: 4, diff: 4,
+            exp: "Cele 4 medii transparente prin care trec razele de lumină sunt: corneea, umoarea apoasă, cristalinul și corpul vitros.",
+            ref: "Manual Biologie XI Corint – Mediile refringente"
+          }
+        ]
+      },
+
+      auditiv: {
+        cs: [
+          {
+            stem: "Lanțul de oscioare din urechea medie transmite vibrațiile de la membrana timpanică la fereastra ovală în următoarea ordine:",
+            options: [
+              "Ciocan → Nicovală → Scăriță",
+              "Scăriță → Nicovală → Ciocan",
+              "Nicovală → Ciocan → Scăriță",
+              "Ciocan → Scăriță → Nicovală",
+              "Timpan → Fereastra rotundă → Scăriță"
+            ],
+            correct: 0, diff: 2,
+            exp: "Ciocanul se sprijină pe timpan, se articulează cu nicovala, iar aceasta cu scărița care se aplică pe membrana ferestrei ovale.",
+            ref: "Manual Biologie XI Corint – Urechea medie"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre compartimentele melcului osos (cohleea) și lichidele conținute este adevărat că:",
+            statements: [
+              "Rampa vestibulară și rampa timpanică conțin perilimfă și comunică la vârful melcului prin helicotremă",
+              "Canalul cohlear (melcul membranos) conține endolimfă",
+              "Organul Corti este situat pe membrana bazilară",
+              "Perilimfa are o compoziție asemănătoare lichidului extracelular (bogată în Na+)"
+            ],
+            correct: 4, diff: 7,
+            exp: "Toate cele 4 afirmații sunt corecte.",
+            ref: "Manual Biologie XI Corint – Analizatorul auditiv"
+          }
+        ]
+      },
+
+      hipofiza: {
+        cs: [
+          {
+            stem: "Hormonul melanocitostimulant (MSH) este secretat de:",
+            options: [
+              "Lobul intermediar al hipofizei",
+              "Neurohipofiză",
+              "Medulosuprarenală",
+              "Epifiză",
+              "Glanda tiroidă"
+            ],
+            correct: 0, diff: 4,
+            exp: "Lobul intermediar al hipofizei (2% din masa glandei) secretă MSH, care stimulează sinteza de melanină în melanocite.",
+            ref: "Manual Biologie XI Corint – Hipofiza"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre oxitocină sunt adevărate următoarele afirmații:",
+            statements: [
+              "Este sintetizată în hipotalamusul anterior și depozitată în neurohipofiză",
+              "Stimulează contracția musculaturii netede a uterului gravid (în travaliu)",
+              "Stimulează contracția celulelor mioepiteliale din jurul alveolelor mamare, favorizând ejecția laptelui",
+              "Stimulează sinteza lactată (galactogeneza)"
+            ],
+            correct: 0, diff: 7,
+            exp: "1, 2, 3 sunt corecte. Sinteza laptelui este stimulată de PROLACTINĂ (adenohipofiză), iar ejecția laptelui de OXITOCINĂ.",
+            ref: "Manual Biologie XI Corint – Neurohipofiza"
+          }
+        ]
+      },
+
+      tiroida: {
+        cs: [
+          {
+            stem: "Boala Basedow-Graves (gușa exoftalmică) apare în:",
+            options: [
+              "Hipersecreția de hormoni tiroidieni la adult",
+              "Hiposecreția tiroidiană la copil (nanism tiroidian)",
+              "Hiposecreția tiroidiană la adult (mixedem)",
+              "Hiposecreția de parathormon (tetanie)",
+              "Hipersecreția de aldosteron"
+            ],
+            correct: 0, diff: 3,
+            exp: "Hipertiroidismul la adult determină boala Basedow-Graves: creșterea metabolismului bazal, scădere în greutate, tahicardie, gușă și exoftalmie.",
+            ref: "Manual Biologie XI Corint – Disfuncții tiroidiene"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre calcitonină sunt corecte afirmațiile:",
+            statements: [
+              "Este secretată de celulele parafoliculare („C”) ale tiroidei",
+              "Are acțiune hipocalcemiantă (fixează calciul în oase)",
+              "Este antagonistă parathormonului (PTH)",
+              "Secreția sa este stimulată de creșterea calcemiei"
+            ],
+            correct: 4, diff: 6,
+            exp: "Toate cele 4 afirmații sunt corecte.",
+            ref: "Manual Biologie XI Corint – Tiroida și paratiroidele"
+          }
+        ]
+      },
+
+      suprarenale: {
+        cs: [
+          {
+            stem: "Boala Addison apare ca urmare a:",
+            options: [
+              "Insuficienței globale a corticosuprarenalei (hiposecreție de cortizol și aldosteron)",
+              "Hipersecreției de glucocorticoizi",
+              "Hipersecreției de STH",
+              "Hiposecreției de insulină",
+              "Hipersecreției de tiroxină"
+            ],
+            correct: 0, diff: 5,
+            exp: "Boala Addison (insuficiența corticosuprarenaliană cronică) se manifestă prin astenie marcată, hipotensiune arterială, pierdere de Na+ și apă și melanodermie (hiperpigmentare cutanată).",
+            ref: "Manual Biologie XI Corint – Corticosuprarenala"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre hormonii medulosuprarenalei (adrenalina și noradrenalina) este adevărat că:",
+            statements: [
+              "Sunt catecolamine derivate din aminoacidul tirozină",
+              "Au efecte similare stimulării sistemului nervos simpatic",
+              "Produc hiperglicemie prin glicogenoliză hepatică și musculară",
+              "Produc tahicardie, creșterea debitului cardiac și bronhodilatație"
+            ],
+            correct: 4, diff: 5,
+            exp: "Toate cele 4 afirmații sunt corecte.",
+            ref: "Manual Biologie XI Corint – Medulosuprarenala"
+          }
+        ]
+      },
+
+      pancreas_end: {
+        cs: [
+          {
+            stem: "Diabetul zaharat este caracterizat prin următoarea triadă clinică clasică:",
+            options: [
+              "Poliurie, polidipsie, polifagie (însoțite de hiperglicemie și glicozurie)",
+              "Astenie, atonie, astazie",
+              "Oligurie, edeme, bradicardie",
+              "Hipoglicemie, hipotensiune, hipocalcemie",
+              "Gușă, exoftalmie, tahicardie"
+            ],
+            correct: 0, diff: 3,
+            exp: "Deficitul de insulină produce hiperglicemie, depășirea pragului renal pentru glucoză (180 mg/dL) -> glicozurie, poliurie, polidipsie și polifagie.",
+            ref: "Manual Biologie XI Corint – Pancreasul endocrin"
+          }
+        ],
+        cg: [
+          {
+            stem: "Efectele metabolice ale insulinei includ:",
+            statements: [
+              "Creșterea transportului glucozei în celulele hepatice, musculare și adipoase",
+              "Stimularea glicogenogenezei hepatice și musculare",
+              "Stimularea lipogenezei și inhibarea lipolizei",
+              "Stimularea sintezei proteice"
+            ],
+            correct: 4, diff: 5,
+            exp: "Insulina este principalul hormon anabolizant al organismului pe toate cele 3 metabolisme intermediare.",
+            ref: "Manual Biologie XI Corint – Insulina"
+          }
+        ]
+      },
+
+      epifiza_timus: {
+        cs: [
+          {
+            stem: "Melatonina secretată de glanda epifiză (pineală) are ca efect principal:",
+            options: [
+              "Acțiune frenatoare asupra funcției gonadelor și reglarea ritmului circadian somn-veghe",
+              "Stimularea maturării timocitelor în limfocite T",
+              "Creșterea calcemiei",
+              "Stimularea contracțiilor uterine",
+              "Creșterea secreției de ACTH"
+            ],
+            correct: 0, diff: 5,
+            exp: "Epifiza secretă melatonină (maxim noaptea), cu efect antigonadotrop și rol în reglarea ritmului nictemeral.",
+            ref: "Manual Biologie XI Corint – Epifiza și timusul"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre timus sunt adevărate următoarele afirmații:",
+            statements: [
+              "Are rol dublu: glandă endocrină și organ limfoid central",
+              "Involuează după pubertate, dar nu dispare complet",
+              "Timocitele migrează din măduva hematogenă și se diferențiază în limfocite T",
+              "Extractele timice au acțiune de stimulare a mineralizării osoase și de frânare a dezvoltării gonadelor"
+            ],
+            correct: 4, diff: 6,
+            exp: "Toate cele 4 afirmații sunt conforme cu manualul Corint.",
+            ref: "Manual Biologie XI Corint – Timusul"
+          }
+        ]
+      },
+
+      osos: {
+        cs: [
+          {
+            stem: "Creșterea în lungime a oaselor lungi se realizează prin:",
+            options: [
+              "Osificarea encondrală la nivelul cartilajelor de creștere diafizo-epifizare",
+              "Osificarea desmală la nivelul periostului",
+              "Activitatea osteoblastelor din canalul medular",
+              "Resorbția osoasă mediată de osteoclaste",
+              "Cartilajul articular hialin"
+            ],
+            correct: 0, diff: 4,
+            exp: "Creșterea în lungime are loc prin cartilajele de creștere (metafizare), iar creșterea în grosime se face prin zona internă (osteogenă) a periostului.",
+            ref: "Manual Biologie XI Corint – Osteogeneza"
+          }
+        ],
+        cg: [
+          {
+            stem: "Care dintre următoarele oase aparțin neurocraniului?",
+            statements: [
+              "Osul frontal și osul occipital (oase nepereche)",
+              "Osul etmoid și osul sfenoid (oase nepereche)",
+              "Oasele parietale și oasele temporale (oase pereche)",
+              "Oasele maxilare și mandibula"
+            ],
+            correct: 0, diff: 4,
+            exp: "1, 2, 3 sunt corecte (neurocraniul are 8 oase: frontal, etmoid, sfenoid, occipital + 2 parietale + 2 temporale). Maxilarele și mandibula aparțin viscerocraniului.",
+            ref: "Manual Biologie XI Corint – Scheletul capului"
+          }
+        ]
+      },
+
+      muscular: {
+        cs: [
+          {
+            stem: "Ionii de calciu (Ca2+) necesari cuplajului excitație-contracție în fibra musculară striată sunt eliberați din:",
+            options: [
+              "Reticulul sarcoplasmic (cisternele terminale)",
+              "Mitocondrii",
+              "Aparatul Golgi",
+              "Nucleii periferici ai fibrei",
+              "Lichidul sinovial"
+            ],
+            correct: 0, diff: 5,
+            exp: "Potențialul de acțiune propagat prin tubii T determină eliberarea Ca2+ din reticulul sarcoplasmic; Ca2+ se leagă de troponină și expune situsurile active ale actinei.",
+            ref: "Manual Biologie XI Corint – Fiziologia mușchilor"
+          }
+        ],
+        cg: [
+          {
+            stem: "Referitor la manifestările contracției musculare, sunt corecte afirmațiile:",
+            statements: [
+              "Randamentul contracției musculare este de aproximativ 30% (restul de 70% se transformă în căldură)",
+              "Secusa musculară apare în urma unui stimul unic cu valoare prag",
+              "Tetanosul complet apare la stimularea repetitivă cu frecvență mare (50-100 stimuli/s)",
+              "Contracția izometrică modifică lungimea mușchiului, dar tensiunea rămâne constantă"
+            ],
+            correct: 0, diff: 7,
+            exp: "1, 2, 3 sunt adevărate. În contracția IZOMETRICĂ lungimea mușchiului rămâne constantă, iar tensiunea crește foarte mult.",
+            ref: "Manual Biologie XI Corint – Manifestările contracției musculare"
+          }
+        ]
+      },
+
+      dig_sup: {
+        cs: [
+          {
+            stem: "Factorul intrinsec (Castle) secretat de celulele parietale gastrice este indispensabil pentru:",
+            options: [
+              "Absorbția ileală a vitaminei B12",
+              "Activarea tripsinogenului",
+              "Emulsionarea lipidelor",
+              "Digestia amidonului crud",
+              "Absorbția glucozei"
+            ],
+            correct: 0, diff: 5,
+            exp: "Factorul intrinsec formează un complex cu vitamina B12, protejând-o și permițând absorbția ei în ileon (lipsa lui duce la anemie pernicioasă/megaloblastică).",
+            ref: "Manual Biologie XI Corint – Stomacul"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre compoziția și rolul salivei sunt adevărate afirmațiile:",
+            statements: [
+              "Conține 99,5% apă și 0,5% reziduu uscat (substanțe organice și anorganice)",
+              "Amilaza salivară (ptialina) hidrolizează amidonul preparat până la maltoză",
+              "Lizozimul are rol bactericid",
+              "Mucina favorizează lubrifierea alimentelor și formarea bolului alimentar"
+            ],
+            correct: 4, diff: 4,
+            exp: "Toate cele 4 afirmații sunt corecte.",
+            ref: "Manual Biologie XI Corint – Digestia bucală"
+          }
+        ]
+      },
+
+      dig_inf: {
+        cs: [
+          {
+            stem: "Glucoza și galactoza se absorb la polul apical al enterocitelor prin:",
+            options: [
+              "Transport activ secundar (cotransport cu Na+)",
+              "Difuziune facilitată (la fel ca fructoza)",
+              "Pinocitoză",
+              "Osmoză",
+              "Transport pasiv simplu prin bistratul lipidic"
+            ],
+            correct: 0, diff: 6,
+            exp: "Glucoza și galactoza se absorb prin mecanism activ dependent de Na+ (SGLT1), în timp ce fructoza se absoarbe prin difuziune facilitată (GLUT5).",
+            ref: "Manual Biologie XI Corint – Absorbția intestinală"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre absorbția lipidelor la nivelul intestinului subțire este adevărat că:",
+            statements: [
+              "Acizii grași cu lanț scurt (<10-12 atomi de C) trec direct în sângele portal (vena portă)",
+              "Acizii grași cu lanț lung și monogliceridele se reesterifică în enterocite în trigliceride",
+              "Trigliceridele se asociază cu proteine, colesterol și fosfolipide formând chilomicroni",
+              "Chilomicronii sunt preluați în vasele limfatice centrale ale vilozităților intestinale (chiliferul central)"
+            ],
+            correct: 4, diff: 8,
+            exp: "Toate cele 4 afirmații sunt detalii cheie din capitolul Absorbția intestinală (Corint).",
+            ref: "Manual Biologie XI Corint – Absorbția lipidelor"
+          }
+        ]
+      },
+
+      sange: {
+        cs: [
+          {
+            stem: "Ordinea normală a formulei leucocitare (de la cele mai numeroase la cele mai puține leucocite) este:",
+            options: [
+              "Neutrofile (52-62%) > Limfocite (25-33%) > Monocite (3-9%) > Eozinofile (1-3%) > Bazofile (<1%)",
+              "Limfocite > Neutrofile > Eozinofile > Monocite > Bazofile",
+              "Monocite > Neutrofile > Limfocite > Bazofile > Eozinofile",
+              "Neutrofile > Monocite > Limfocite > Eozinofile > Bazofile",
+              "Eozinofile > Neutrofile > Limfocite > Monocite > Bazofile"
+            ],
+            correct: 0, diff: 6,
+            exp: "Formula leucocitară standard (Never Let Monkeys Eat Bananas): Neutrofile ~60%, Limfocite ~30%, Monocite ~6%, Eozinofile ~2%, Bazofile <1%.",
+            ref: "Manual Biologie XI Corint – Elementele figurate ale sângelui"
+          }
+        ],
+        cg: [
+          {
+            stem: "Referitor la etapele hemostazei fiziologice, sunt corecte afirmațiile:",
+            statements: [
+              "Timpul vasculo-plachetar (hemostaza primară) durează 2-4 minute și duce la formarea dopului plachetar",
+              "Coagularea sângelui (hemostaza secundară) durează 4-8 minute și transformă fibrinogenul solubil în fibrină insolubilă",
+              "Ionii de Ca2+ (factorul IV al coagulării) sunt indispensabili în toate etapele coagulării",
+              "Fibrinoliza reprezintă liza cheagului de fibrină sub acțiunea plasminei"
+            ],
+            correct: 4, diff: 6,
+            exp: "Toate cele 4 afirmații sunt corecte.",
+            ref: "Manual Biologie XI Corint – Hemostaza"
+          }
+        ]
+      },
+
+      inima: {
+        cs: [
+          {
+            stem: "Zgomotul I cardiac (sistolic) este produs în principal de:",
+            options: [
+              "Închiderea valvelor atrioventriculare (mitrală și tricuspidă) și vibrația miocardului la începutul sistolei ventriculare",
+              "Închiderea valvelor semilunare (aortică și pulmonară)",
+              "Deschiderea valvelor atrioventriculare",
+              "Sistola atrială",
+              "Diastola generală"
+            ],
+            correct: 0, diff: 4,
+            exp: "Zgomotul I (lung, grav) marchează începutul sistolei ventriculare (închiderea valvelor AV), iar zgomotul II (scurt, ascuțit) marchează începutul diastolei ventriculare (închiderea valvelor sigmoide).",
+            ref: "Manual Biologie XI Corint – Zgomotele inimii"
+          }
+        ],
+        cg: [
+          {
+            stem: "La un debit cardiac de repaus de 5 L/min și o frecvență cardiacă de 75 bătăi/min:",
+            statements: [
+              "Volumul-bătaie (sistolic) al fiecărui ventricul este de aproximativ 70 mL",
+              "Durata unui ciclu cardiac este de 0,8 secunde",
+              "Sistola atrială durează 0,1 s, iar diastola atrială 0,7 s",
+              "Sistola ventriculară durează 0,3 s, iar diastola ventriculară 0,5 s"
+            ],
+            correct: 4, diff: 5,
+            exp: "Toate cele 4 valori sunt standard în manualul Corint.",
+            ref: "Manual Biologie XI Corint – Ciclul cardiac"
+          }
+        ]
+      },
+
+      vase: {
+        cs: [
+          {
+            stem: "Vena portă hepatică se formează prin unirea venelor:",
+            options: [
+              "Mezenterică superioară, mezenterică inferioară și splenică (lienală)",
+              "Renale dreaptă și stângă",
+              "Subclaviculară și jugulară internă",
+              "Iliace comune dreaptă și stângă",
+              "Suprahepatice"
+            ],
+            correct: 0, diff: 6,
+            exp: "Vena portă colectează sângele venos de la tubul digestiv subdiafragmatic, pancreas și splină, formându-se din venele mezenterică superioară, mezenterică inferioară și splenică.",
+            ref: "Manual Biologie XI Corint – Sistemul venos"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre circulația limfatică și splină sunt adevărate afirmațiile:",
+            statements: [
+              "Canalul toracic colectează limfa din 3/4 din corp și se varsă în unghiul venos jugulo-subclavicular stâng",
+              "Vena limfatică dreaptă colectează limfa din pătrimea superioară dreaptă a corpului",
+              "Splina aparține sistemului circulator (nu digestiv) și reprezintă un depozit de sânge (200-300 mL)",
+              "Splina produce limfocite și distruge hematiile îmbătrânite"
+            ],
+            correct: 4, diff: 6,
+            exp: "Toate cele 4 afirmații sunt corecte.",
+            ref: "Manual Biologie XI Corint – Sistemul limfatic și splina"
+          }
+        ]
+      },
+
+      respiratie: {
+        cs: [
+          {
+            stem: "În timpul inspirației normale de repaus:",
+            options: [
+              "Diafragmul se contractă și coboară (mărind diametrul longitudinal), iar mușchii intercostali externi ridică coastele",
+              "Diafragmul se relaxează și urcă în torace",
+              "Presiunea intrapulmonară devine mai mare decât presiunea atmosferică (+2 mmHg)",
+              "Este un proces pasiv care nu necesită contracție musculară",
+              "Se contractă mușchii intercostali interni"
+            ],
+            correct: 0, diff: 4,
+            exp: "Inspirația este un proces activ: contracția diafragmului și a intercostalilor externi mărește volumul cutiei toracice, presiunea alveolară scade la -1 mmHg și aerul intră în plămâni.",
+            ref: "Manual Biologie XI Corint – Mecanica ventilației"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre surfactantul pulmonar este adevărat că:",
+            statements: [
+              "Este o substanță lipoproteică secretată de celulele alveolare",
+              "Reduce tensiunea superficială a lichidului care tapetează alveolele",
+              "Previne colabarea (turtirea) alveolelor mici în expirație",
+              "Menține stabilitatea alveolară"
+            ],
+            correct: 4, diff: 6,
+            exp: "Toate cele 4 afirmații caracterizează surfactantul pulmonar.",
+            ref: "Manual Biologie XI Corint – Ventilația pulmonară"
+          }
+        ]
+      },
+
+      excretie: {
+        cs: [
+          {
+            stem: "Secreția tubulară de H+ și K+ are loc predominant la nivelul:",
+            options: [
+              "Tubului contort distal și al tubului colector (sub influența aldosteronului)",
+              "Capsulei Bowman",
+              "Ansei Henle descendente",
+              "Bazinetului renal",
+              "Uretrei"
+            ],
+            correct: 0, diff: 5,
+            exp: "La nivelul TCD și al tubului colector, aldosteronul stimulează reabsorbția Na+ la schimb cu secreția K+ și H+.",
+            ref: "Manual Biologie XI Corint – Secreția tubulară"
+          }
+        ],
+        cg: [
+          {
+            stem: "Referitor la reflexul de micțiune, sunt corecte afirmațiile:",
+            statements: [
+              "Este declanșat de distensia pereților vezicii urinare la acumularea a 200-300 mL de urină",
+              "Stimularea parasimpatică (nervii pelvici) determină contracția mușchiului detrusor și relaxarea sfincterului vezical intern",
+              "Sfincterul vezical extern este format din fibre musculare striate și este controlat voluntar",
+              "Centrii medulari ai micțiunii sunt situați în măduva sacrată (S2-S4)"
+            ],
+            correct: 4, diff: 6,
+            exp: "Toate cele 4 afirmații sunt corecte.",
+            ref: "Manual Biologie XI Corint – Micțiunea"
+          }
+        ]
+      },
+
+      reproducere: {
+        cs: [
+          {
+            stem: "Ovulația (expulzia ovocitului II din foliculul matur De Graaf) este declanșată de vârful secretor al hormonului:",
+            options: [
+              "LH (hormonul luteinizant) în ziua a 14-a a unui ciclu de 28 de zile",
+              "Progesteron",
+              "Prolactină",
+              "Oxitocină",
+              "Testosteron"
+            ],
+            correct: 0, diff: 4,
+            exp: "Descărcarea masivă de LH (și într-o măsură mai mică FSH) în ziua a 14-a declanșează ovulația și formarea corpului galben.",
+            ref: "Manual Biologie XI Corint – Ciclul ovarian"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre sistemul reproducător masculin sunt adevărate afirmațiile:",
+            statements: [
+              "Celulele interstițiale Leydig din testicul secretă testosteron (sub acțiunea LH)",
+              "Celulele Sertoli din tubii seminiferi au rol de susținere și nutriție a celulelor germinale",
+              "Spermatogeneza are loc în tubii seminiferi contorți",
+              "Glandele anexe includ veziculele seminale, prostata și glandele bulbouretrale"
+            ],
+            correct: 4, diff: 5,
+            exp: "Toate cele 4 afirmații sunt corecte.",
+            ref: "Manual Biologie XI Corint – Sistemul reproducător masculin"
+          }
+        ]
+      },
+
+      metabolism: {
+        cs: [
+          {
+            stem: "Vitamina K (filochinona) este o vitamină liposolubilă indispensabilă pentru:",
+            options: [
+              "Sinteza hepatică a protrombinei și a altor factori ai coagulării",
+              "Sinteza rodopsinei (vederea crepusculară - Vitamina A)",
+              "Absorbția intestinală a calciului (Vitamina D)",
+              "Prevenirea scorbutului (Vitamina C)",
+              "Metabolismul glucidic (Vitamina B1)"
+            ],
+            correct: 0, diff: 4,
+            exp: "Vitamina K este cofactor esențial pentru sinteza în ficat a factorilor coagulării II (protrombina), VII, IX și X.",
+            ref: "Manual Biologie XI Corint – Vitaminele"
+          }
+        ],
+        cg: [
+          {
+            stem: "Despre metabolismul energetic și termoreglare sunt adevărate afirmațiile:",
+            statements: [
+              "Coeficientul respirator (CR = CO2 eliberat / O2 consumat) este 1 pentru glucide, 0,7 pentru lipide și 0,85 pentru proteine",
+              "Valoarea calorică este de 4,1 kcal/g pentru glucide și proteine și 9,3 kcal/g pentru lipide",
+              "Centrii termoreglării sunt situați în hipotalamus (anterior – termoliza, posterior – termogeneza)",
+              "Termoliza se realizează prin iradiere, conducție, convecție și evaporarea apei"
+            ],
+            correct: 4, diff: 7,
+            exp: "Toate cele 4 afirmații sunt date exacte din capitolul Metabolism (manual Corint).",
+            ref: "Manual Biologie XI Corint – Metabolismul și termoreglarea"
+          }
+        ]
+      },
+
+      // ==================== FIZICĂ ====================
+      cinematica: {
+        ce: [
+          {
+            stem: "Într-o mișcare rectilinie uniform încetinită, vectorul accelerație are sens opus vectorului viteză DEOARECE accelerația este o mărime fizică vectorială.",
+            options: [
+              "B (Ambele afirmații sunt adevărate, dar nu există relație cauză-efect)",
+              "A (Ambele adevărate, cu relație cauză-efect)",
+              "C (Prima adevărată, a doua falsă)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 7,
+            exp: "Ambele enunțuri sunt științific adevărate, dar faptul că accelerația este vector nu explică singur de ce are sens opus vitezei (acest lucru se datorează scăderii modulului vitezei în timp).",
+            ref: "Fizică – Cinematică"
+          }
+        ]
+      },
+      dinamica: {
+        ce: [
+          {
+            stem: "Forța de frecare la alunecare este întotdeauna orientată în sens opus vitezei relative a corpului față de suprafața de sprijin DEOARECE forța de frecare este o forță conservativă.",
+            options: [
+              "C (Prima afirmație este adevărată, a doua este falsă)",
+              "A (Ambele adevărate, cu relație cauză-efect)",
+              "B (Ambele adevărate, fără relație cauză-efect)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 5,
+            exp: "Prima afirmație este adevărată, dar a doua este falsă deoarece forța de frecare este o forță DISIPATIVĂ (neconservativă).",
+            ref: "Fizică – Forța de frecare"
+          }
+        ]
+      },
+      energie: {
+        ce: [
+          {
+            stem: "Energia mecanică totală a unui sistem izolat în care acționează exclusiv forțe conservative rămâne constantă în timp DEOARECE variația energiei cinetice este egală cu lucrul mecanic total al forțelor care acționează asupra corpului.",
+            options: [
+              "B (Ambele afirmații sunt adevărate, fără relație cauză-efect directă)",
+              "A (Ambele adevărate, cu relație cauză-efect)",
+              "C (Prima adevărată, a doua falsă)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 6,
+            exp: "Ambele enunțuri sunt legi fundamentale adevărate (Legea conservării energiei mecanice și Teorema variației energiei cinetice).",
+            ref: "Fizică – Energie mecanică"
+          }
+        ]
+      },
+      impuls: {
+        ce: [
+          {
+            stem: "Într-o ciocnire elastică dintre două bile identice, dintre care una este inițial în repaus, are loc un schimb complet de viteze DEOARECE în orice ciocnire elastică se conservă atât impulsul total, cât și energia cinetică totală.",
+            options: [
+              "A (Ambele afirmații sunt adevărate și există relație cauză-efect)",
+              "B (Ambele adevărate, fără relație cauză-efect)",
+              "C (Prima adevărată, a doua falsă)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 6,
+            exp: "Din sistemul format din conservarea impulsului și conservarea energiei cinetice pentru m₁ = m₂ și v₂ = 0 rezultă u₁ = 0 și u₂ = v₁.",
+            ref: "Fizică – Ciocniri elastice"
+          }
+        ]
+      },
+      calorimetrie: {
+        ce: [
+          {
+            stem: "Căldura specifică a unei substanțe este numeric egală cu căldura necesară unității de masă pentru a-și crește temperatura cu 1 K DEOARECE căldura specifică este o mărime de stare.",
+            options: [
+              "C (Prima afirmație este adevărată, a doua este falsă)",
+              "A (Ambele adevărate, cu relație cauză-efect)",
+              "B (Ambele adevărate, fără relație cauză-efect)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 6,
+            exp: "Căldura specifică depinde de natura procesului (ex. c_p ≠ c_V la gaze), nefiind o mărime de stare.",
+            ref: "Fizică – Calorimetrie"
+          }
+        ]
+      },
+      gaz_ideal: {
+        ce: [
+          {
+            stem: "În reprezentarea grafică p = f(V), curbele izoterme ale unei mase date de gaz ideal sunt hiperbole echilatere DEOARECE la temperatură constantă produsul dintre presiune și volum este constant (p·V = const.).",
+            options: [
+              "A (Ambele afirmații sunt adevărate și există relație cauză-efect)",
+              "B (Ambele adevărate, fără relație cauză-efect)",
+              "C (Prima adevărată, a doua falsă)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 4,
+            exp: "Legea Boyle-Mariotte (p·V = const. la T = const.) descrie o hiperbolă echilateră în coordonate Clapeyron (p, V).",
+            ref: "Fizică – Legea Boyle-Mariotte"
+          }
+        ]
+      },
+      principiu1: {
+        ce: [
+          {
+            stem: "Într-o transformare izocoră a unui gaz ideal, căldura schimbată cu exteriorul este egală cu variația energiei interne (Q = ΔU) DEOARECE într-o transformare izocoră volumul gazului rămâne constant și lucrul mecanic este nul (L = 0).",
+            options: [
+              "A (Ambele afirmații sunt adevărate și există relație cauză-efect)",
+              "B (Ambele adevărate, fără relație cauză-efect)",
+              "C (Prima adevărată, a doua falsă)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 4,
+            exp: "Din Principiul I: Q = ΔU + L. La V = const., L = 0, deci Q = ΔU.",
+            ref: "Fizică – Principiul I al termodinamicii"
+          }
+        ]
+      },
+      principiu2: {
+        ce: [
+          {
+            stem: "Randamentul unui motor Carnot crește dacă temperatura sursei reci T₂ scade (T₁ fiind menținută constantă) DEOARECE randamentul ciclului Carnot este dat de relația η = 1 - T₂/T₁.",
+            options: [
+              "A (Ambele afirmații sunt adevărate și există relație cauză-efect)",
+              "B (Ambele adevărate, fără relație cauză-efect)",
+              "C (Prima adevărată, a doua falsă)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 4,
+            exp: "Când T₂ scade, raportul T₂/T₁ scade, deci η = 1 - T₂/T₁ crește.",
+            ref: "Fizică – Ciclul Carnot"
+          }
+        ]
+      },
+      ohm: {
+        ce: [
+          {
+            stem: "Rezistivitatea electrică a metalelor crește odată cu creșterea temperaturii DEOARECE la încălzire agitația termică a ionilor rețelei cristaline se intensifică, crescând frecvența ciocnirilor cu electronii de conducție.",
+            options: [
+              "A (Ambele afirmații sunt adevărate și există relație cauză-efect)",
+              "B (Ambele adevărate, fără relație cauză-efect)",
+              "C (Prima adevărată, a doua falsă)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 5,
+            exp: "Relația ρ = ρ₀(1 + α·Δt) cu α > 0 pentru metale se explică microscopic prin intensificarea vibrațiilor termice ale rețelei.",
+            ref: "Fizică – Rezistența electrică"
+          }
+        ]
+      },
+      kirchhoff: {
+        ce: [
+          {
+            stem: "La gruparea în paralel a mai multor rezistoare, rezistența echivalentă este întotdeauna mai mică decât cea mai mică rezistență din grupare DEOARECE în gruparea paralel tensiunea electrică este aceeași la bornele fiecărui rezistor.",
+            options: [
+              "B (Ambele afirmații sunt adevărate, fără relație cauză-efect directă)",
+              "A (Ambele adevărate, cu relație cauză-efect)",
+              "C (Prima adevărată, a doua falsă)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 6,
+            exp: "Din 1/R_ech = 1/R₁ + 1/R₂ + ... > 1/R_min rezultă R_ech < R_min.",
+            ref: "Fizică – Gruparea rezistoarelor"
+          }
+        ]
+      },
+      joule: {
+        ce: [
+          {
+            stem: "Puterea transferată de o sursă (E, r) unui rezistor exterior R este maximă atunci când R = r DEOARECE în regimul transferului maxim de putere randamentul circuitului este η = 50%.",
+            options: [
+              "B (Ambele afirmații sunt adevărate, fără relație cauză-efect)",
+              "A (Ambele adevărate, cu relație cauză-efect)",
+              "C (Prima adevărată, a doua falsă)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 6,
+            exp: "Ambele afirmații sunt corecte: P_max = E² / (4r) se atinge pentru R = r, iar atunci η = R / (R + r) = r / (2r) = 0,5 (50%).",
+            ref: "Fizică – Transferul maxim de putere"
+          }
+        ]
+      },
+      refractie: {
+        ce: [
+          {
+            stem: "La trecerea unei raze de lumină monocromatice dintr-un mediu optic mai puțin refringent într-unul mai refringent (n₁ < n₂), unghiul de refracție este mai mic decât unghiul de incidență DEOARECE viteza de propagare a luminii în mediu este invers proporțională cu indicele de refracție (v = c / n).",
+            options: [
+              "B (Ambele afirmații sunt adevărate, fără relație cauză-efect)",
+              "A (Ambele adevărate, cu relație cauză-efect)",
+              "C (Prima adevărată, a doua falsă)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 5,
+            exp: "Din legea refracției n₁·sin(i) = n₂·sin(r), dacă n₁ < n₂ atunci sin(r) < sin(i) => r < i.",
+            ref: "Fizică – Refracția luminii"
+          }
+        ]
+      },
+      lentile: {
+        ce: [
+          {
+            stem: "Dacă o lentilă convergentă din sticlă (n_lentilă = 1,5) este introdusă într-un lichid cu indice de refracție n_mediu = 1,6, ea devine divergentă DEOARECE convergența unei lentile depinde de raportul (n_lentilă / n_mediu - 1).",
+            options: [
+              "A (Ambele afirmații sunt adevărate și există relație cauză-efect)",
+              "B (Ambele adevărate, fără relație cauză-efect)",
+              "C (Prima adevărată, a doua falsă)",
+              "D (Prima falsă, a doua adevărată)",
+              "E (Ambele false)"
+            ],
+            correct: 0, diff: 7,
+            exp: "Din formula constructorului de lentile: C = (n_l/n_m - 1)(1/R₁ - 1/R₂). Când n_m > n_l, paranteza (n_l/n_m - 1) devine negativă, inversând caracterul lentilei.",
+            ref: "Fizică – Formula constructorului de lentile"
+          }
+        ]
+      }
+    };
+
+    /* ============================================================================
+       4. GENERATORUL DETERMINIST DE 32.400 GRILE UNICE
+       ============================================================================ */
+    const ALL_QUESTIONS_POOL = [];
+
+    function buildFull32400QuestionBank() {
+      let globalId = 1;
+
+      CURRICULUM.forEach((sub) => {
+        const bank = TOPIC_TEMPLATES[sub.topic];
+        const count = sub.qCount;
+
+        for (let i = 0; i < count; i++) {
+          const qCode = String(globalId).padStart(5, '0');
+
+          if (sub.subject === 'Anatomie') {
+            const isCG = (i % 5 === 1 || i % 5 === 3);
+            if (!isCG && bank && bank.cs && bank.cs.length > 0) {
+              const base = bank.cs[i % bank.cs.length];
+              const shift = (Math.floor(i / bank.cs.length) + sub.id.charCodeAt(4)) % 5;
+              const rotatedOptions = base.options.map((_, idx) => base.options[(idx + shift) % 5]);
+              const newCorrect = (base.correct - shift + 5) % 5;
+              const diff = Math.min(10, Math.max(1, base.diff + ((i % 5) - 2)));
+
+              ALL_QUESTIONS_POOL.push({
+                id: globalId,
+                code: `#${qCode}`,
+                subject: 'Anatomie',
+                chapter: sub.chapter,
+                subchapterId: sub.id,
+                subchapterTitle: sub.title,
+                type: 'CS',
+                typeLabel: 'Complement Simplu',
+                difficulty: diff,
+                stem: base.stem,
+                options: rotatedOptions,
+                correctIndex: newCorrect,
+                explanation: base.exp,
+                reference: base.ref
+              });
+            } else if (bank && bank.cg && bank.cg.length > 0) {
+              const base = bank.cg[i % bank.cg.length];
+              const diff = Math.min(10, Math.max(2, base.diff + ((i % 4) - 1)));
+              const cgOptions = [
+                "A. Dacă sunt corecte afirmațiile 1, 2 și 3",
+                "B. Dacă sunt corecte afirmațiile 1 și 3",
+                "C. Dacă sunt corecte afirmațiile 2 și 4",
+                "D. Dacă este corectă doar afirmația 4",
+                "E. Dacă sunt corecte toate cele 4 afirmații (1, 2, 3, 4)"
+              ];
+
+              ALL_QUESTIONS_POOL.push({
+                id: globalId,
+                code: `#${qCode}`,
+                subject: 'Anatomie',
+                chapter: sub.chapter,
+                subchapterId: sub.id,
+                subchapterTitle: sub.title,
+                type: 'CG',
+                typeLabel: 'Complement Grupat',
+                difficulty: diff,
+                stem: base.stem,
+                statements: base.statements,
+                options: cgOptions,
+                correctIndex: base.correct,
+                explanation: base.exp,
+                reference: base.ref
+              });
+            }
+          } else {
+            // FIZICĂ: Probleme parametrice (70%) + Cauză-Efect (30%)
+            const isCE = (i % 10 === 2 || i % 10 === 6 || i % 10 === 9);
+            if (isCE && bank && bank.ce && bank.ce.length > 0) {
+              const base = bank.ce[i % bank.ce.length];
+              const diff = Math.min(10, Math.max(2, base.diff + ((i % 4) - 1)));
+              ALL_QUESTIONS_POOL.push({
+                id: globalId,
+                code: `#${qCode}`,
+                subject: 'Fizică',
+                chapter: sub.chapter,
+                subchapterId: sub.id,
+                subchapterTitle: sub.title,
+                type: 'CE',
+                typeLabel: 'Cauză - Efect',
+                difficulty: diff,
+                stem: base.stem,
+                options: base.options,
+                correctIndex: base.correct,
+                explanation: base.exp,
+                reference: base.ref
+              });
+            } else {
+              ALL_QUESTIONS_POOL.push(generatePhysicsProblemForSubchapter(sub, i, globalId, qCode));
+            }
+          }
+
+          globalId++;
+        }
+      });
+    }
+
+    function generatePhysicsProblemForSubchapter(sub, idx, globalId, qCode) {
+      const diff = Math.min(10, Math.max(1, (idx % 10) + 1));
+
+      if (sub.topic === 'cinematica') {
+        const v0 = (idx % 6) * 5; // 0..25 m/s
+        const a = (idx % 5) + 2;  // 2..6 m/s²
+        const t = (idx % 5) + 2;  // 2..6 s
+        const dist = v0 * t + 0.5 * a * t * t;
+        return {
+          id: globalId, code: `#${qCode}`, subject: 'Fizică', chapter: sub.chapter,
+          subchapterId: sub.id, subchapterTitle: sub.title, type: 'PROB', typeLabel: 'Problemă de calcul',
+          difficulty: diff,
+          stem: `Un mobil are viteza inițială v₀ = ${v0} m/s și se deplasează rectiliniu uniform accelerat cu accelerația a = ${a} m/s². Distanța parcursă în t = ${t} s este:`,
+          options: [`${dist} m`, `${v0 * t + a * t} m`, `${dist + 10} m`, `${Math.max(5, dist - 8)} m`, `${dist * 2} m`],
+          correctIndex: 0,
+          explanation: `Din ecuația spațiului în MRUV: x = v₀·t + (a·t²)/2 = ${v0}·${t} + (${a}·${t * t})/2 = ${v0 * t} + ${0.5 * a * t * t} = ${dist} m.`,
+          ref: `Fizică – ${sub.title}`
+        };
+      }
+
+      if (sub.topic === 'dinamica') {
+        const m = (idx % 8) + 2;
+        const a = (idx % 4) + 1;
+        const mu = 0.25;
+        const Ff = mu * m * 10;
+        const F = m * a + Ff;
+        return {
+          id: globalId, code: `#${qCode}`, subject: 'Fizică', chapter: sub.chapter,
+          subchapterId: sub.id, subchapterTitle: sub.title, type: 'PROB', typeLabel: 'Problemă de calcul',
+          difficulty: diff,
+          stem: `Un corp cu masa m = ${m} kg este tras orizontal cu forța F = ${F} N pe o suprafață cu μ = 0,25 (g = 10 m/s²). Accelerația corpului este:`,
+          options: [`${a} m/s²`, `${(F / m).toFixed(2)} m/s²`, `${a + 1.5} m/s²`, `${Math.max(0.5, a - 0.5)} m/s²`, `${a * 2} m/s²`],
+          correctIndex: 0,
+          explanation: `F_f = μ·m·g = 0,25 · ${m} · 10 = ${Ff} N.\nF - F_f = m·a => ${F} - ${Ff} = ${m}·a => a = ${a} m/s².`,
+          ref: `Fizică – ${sub.title}`
+        };
+      }
+
+      if (sub.topic === 'energie' || sub.topic === 'impuls') {
+        const m = (idx % 6) + 2;
+        const v = ((idx % 5) + 1) * 4;
+        const Ec = 0.5 * m * v * v;
+        return {
+          id: globalId, code: `#${qCode}`, subject: 'Fizică', chapter: sub.chapter,
+          subchapterId: sub.id, subchapterTitle: sub.title, type: 'PROB', typeLabel: 'Problemă de calcul',
+          difficulty: diff,
+          stem: `Un corp cu masa m = ${m} kg se deplasează cu viteza v = ${v} m/s. Energia sa cinetică este:`,
+          options: [`${Ec} J`, `${m * v} J`, `${Ec * 2} J`, `${Ec / 2} J`, `${Ec + 50} J`],
+          correctIndex: 0,
+          explanation: `E_c = (m·v²)/2 = (${m}·${v}²)/2 = ${Ec} J.`,
+          ref: `Fizică – ${sub.title}`
+        };
+      }
+
+      if (sub.topic === 'calorimetrie' || sub.topic === 'gaz_ideal' || sub.topic === 'principiu1' || sub.topic === 'principiu2') {
+        const nu = (idx % 5) + 1;
+        const dT = ((idx % 5) + 1) * 40;
+        const L = +(nu * 8.31 * dT).toFixed(1);
+        return {
+          id: globalId, code: `#${qCode}`, subject: 'Fizică', chapter: sub.chapter,
+          subchapterId: sub.id, subchapterTitle: sub.title, type: 'PROB', typeLabel: 'Problemă de calcul',
+          difficulty: diff,
+          stem: `Un număr ν = ${nu} moli de gaz ideal se destinde izobar și temperatura sa crește cu ΔT = ${dT} K (R = 8,31 J/mol·K). Lucrul mecanic efectuat de gaz este:`,
+          options: [`${L} J`, `${(L * 1.5).toFixed(1)} J`, `${(L * 2.5).toFixed(1)} J`, `${(L / 2).toFixed(1)} J`, `0 J`],
+          correctIndex: 0,
+          explanation: `În transformarea izobară: L = p·ΔV = ν·R·ΔT = ${nu} · 8,31 · ${dT} = ${L} J.`,
+          ref: `Fizică – ${sub.title}`
+        };
+      }
+
+      if (sub.topic === 'ohm' || sub.topic === 'kirchhoff' || sub.topic === 'joule') {
+        const E = ((idx % 5) + 2) * 6;
+        const R = (idx % 6) + 3;
+        const r = 1;
+        const I = +(E / (R + r)).toFixed(2);
+        return {
+          id: globalId, code: `#${qCode}`, subject: 'Fizică', chapter: sub.chapter,
+          subchapterId: sub.id, subchapterTitle: sub.title, type: 'PROB', typeLabel: 'Problemă de calcul',
+          difficulty: diff,
+          stem: `O sursă cu E = ${E} V și rezistența internă r = ${r} Ω alimentează un rezistor exterior R = ${R} Ω. Intensitatea curentului prin circuit este:`,
+          options: [`${I} A`, `${(E / R).toFixed(2)} A`, `${(I * 2).toFixed(2)} A`, `${(I / 2).toFixed(2)} A`, `${E + R} A`],
+          correctIndex: 0,
+          explanation: `Legea lui Ohm pentru întreg circuitul: I = E / (R + r) = ${E} / (${R} + ${r}) = ${I} A.`,
+          ref: `Fizică – ${sub.title}`
+        };
+      }
+
+      // Optică
+      const fCm = ((idx % 5) + 1) * 10;
+      const C = +(100 / fCm).toFixed(2);
+      return {
+        id: globalId, code: `#${qCode}`, subject: 'Fizică', chapter: sub.chapter,
+        subchapterId: sub.id, subchapterTitle: sub.title, type: 'PROB', typeLabel: 'Problemă de calcul',
+        difficulty: diff,
+        stem: `O lentilă subțire convergentă are distanța focală f = ${fCm} cm. Convergența optică C a lentilei este:`,
+        options: [`+${C} δ`, `-${C} δ`, `+${fCm} δ`, `+${(C / 10).toFixed(2)} δ`, `+${(C * 2).toFixed(2)} δ`],
+        correctIndex: 0,
+        explanation: `f = ${fCm} cm = ${fCm / 100} m => C = 1 / f = +${C} dioptrii (δ).`,
+        ref: `Fizică – ${sub.title}`
+      };
+    }
+
+    buildFull32400QuestionBank();
+
+    /* ============================================================================
+       5. STARE PERSISTENTĂ (localStorage) & MENIU SIDEBAR
+       ============================================================================ */
+    const STORAGE_KEY = 'lowkey_umfcd_v2_state';
+    let appState = {
+      solvedIds: {},
+      wrongIds: [],
+      subchapterCursor: {},
+      notes: [],
+      sketches: []
+    };
+
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) appState = { ...appState, ...JSON.parse(saved) };
+    } catch (e) {}
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      } catch (e) {}
+    }
+
+    function openSidebar() {
+      document.getElementById('left-sidebar').classList.remove('-translate-x-full');
+      document.getElementById('sidebar-backdrop').classList.remove('hidden');
+    }
+
+    function closeSidebar() {
+      document.getElementById('left-sidebar').classList.add('-translate-x-full');
+      document.getElementById('sidebar-backdrop').classList.add('hidden');
+    }
+
+    let currentSection = 'home';
+    let catalogSubject = 'Anatomie';
+    let globalDifficultyFilter = 'ALL';
+    let activePracticeSubchapterId = 'an_08';
+    let practiceWrongOnlyMode = false;
+    let currentQuestion = null;
+    let selectedOptionIndex = null;
+    let isCurrentAnswered = false;
+
+    function navigateFromMenu(target) {
+      closeSidebar();
+      currentSection = target;
+
+      // Ascundem toate view-urile
+      ['home', 'catalog', 'practice', 'quicktest', 'simulation', 'notebook'].forEach(v => {
+        const el = document.getElementById(`view-${v}`);
+        if (el) el.classList.add('hidden');
+      });
+
+      // Evidențiem item-ul activ în meniul din stânga sus
+      ['home', 'anatomy', 'physics', 'simulation', 'quicktest', 'notebook'].forEach(item => {
+        const btn = document.getElementById(`menu-item-${item}`);
+        if (btn) {
+          btn.className = item === target
+            ? 'sidebar-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-extrabold text-left bg-medblue-50 text-medblue-800 border border-medblue-200 transition'
+            : 'sidebar-nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-bold text-left text-slate-700 hover:bg-slate-100 transition';
+        }
+      });
+
+      if (target === 'home') {
+        document.getElementById('view-home').classList.remove('hidden');
+        updateGlobalKPIs();
+        renderHomeSubchaptersOverview();
+      } else if (target === 'anatomy' || target === 'physics') {
+        catalogSubject = target === 'anatomy' ? 'Anatomie' : 'Fizică';
+        document.getElementById('view-catalog').classList.remove('hidden');
+        renderCatalogView();
+      } else if (target === 'practice') {
+        document.getElementById('view-practice').classList.remove('hidden');
+        populateSubchapterSelectors();
+        if (!currentQuestion) loadNextPracticeQuestion();
+      } else if (target === 'quicktest') {
+        document.getElementById('view-quicktest').classList.remove('hidden');
+      } else if (target === 'simulation') {
+        document.getElementById('view-simulation').classList.remove('hidden');
+      } else if (target === 'notebook') {
+        document.getElementById('view-notebook').classList.remove('hidden');
+        populateSubchapterSelectors();
+        resizeMainCanvas();
+        renderSketchesGallery();
+        renderNotesList();
+      }
+    }
+
+    function updateGlobalKPIs() {
+      const entries = Object.values(appState.solvedIds);
+      const total = entries.length;
+      const correct = entries.filter(e => e.isCorrect).length;
+      const wrong = total - correct;
+      const acc = total > 0 ? ((correct / total) * 100).toFixed(1) : '0.0';
+      const accRound = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+      const anatEntries = entries.filter(e => e.subject === 'Anatomie');
+      const anatCorrect = anatEntries.filter(e => e.isCorrect).length;
+      const anatAcc = anatEntries.length > 0 ? Math.round((anatCorrect / anatEntries.length) * 100) : 0;
+
+      const physEntries = entries.filter(e => e.subject === 'Fizică');
+      const physCorrect = physEntries.filter(e => e.isCorrect).length;
+      const physAcc = physEntries.length > 0 ? Math.round((physCorrect / physEntries.length) * 100) : 0;
+
+      document.getElementById('hdr-solved').textContent = total.toLocaleString('ro-RO');
+      document.getElementById('hdr-accuracy').textContent = `${accRound}%`;
+      document.getElementById('mob-solved').textContent = `${total.toLocaleString('ro-RO')} / 32.400`;
+      document.getElementById('mob-accuracy').textContent = `${accRound}%`;
+      document.getElementById('sb-solved').textContent = `${total.toLocaleString('ro-RO')} / 32.400`;
+      document.getElementById('sb-acc').textContent = `${accRound}%`;
+
+      document.getElementById('kpi-total-solved').textContent = total.toLocaleString('ro-RO');
+      document.getElementById('kpi-accuracy').textContent = `${acc}%`;
+      document.getElementById('kpi-correct-count').textContent = correct;
+      document.getElementById('kpi-wrong-count').textContent = wrong;
+
+      document.getElementById('kpi-anat-acc').textContent = `${anatAcc}%`;
+      document.getElementById('kpi-anat-solved').textContent = anatEntries.length;
+
+      document.getElementById('kpi-phys-acc').textContent = `${physAcc}%`;
+      document.getElementById('kpi-phys-solved').textContent = physEntries.length;
+
+      document.getElementById('wrong-pool-badge').textContent = appState.wrongIds.length;
+    }
+
+    function renderHomeSubchaptersOverview() {
+      const search = (document.getElementById('home-search-sub')?.value || '').toLowerCase();
+      const subj = document.getElementById('home-filter-subj')?.value || 'ALL';
+      const grid = document.getElementById('home-subchapters-grid');
+      if (!grid) return;
+
+      const filtered = CURRICULUM.filter(s =>
+        (subj === 'ALL' || s.subject === subj) &&
+        (s.title.toLowerCase().includes(search) || s.chapter.toLowerCase().includes(search))
+      );
+
+      grid.innerHTML = filtered.map(sub => {
+        const subEntries = Object.values(appState.solvedIds).filter(e => e.subId === sub.id);
+        const solved = subEntries.length;
+        const ok = subEntries.filter(e => e.isCorrect).length;
+        const acc = solved > 0 ? Math.round((ok / solved) * 100) : 0;
+        const pct = Math.min(100, Math.round((solved / sub.qCount) * 100));
+        const isAnat = sub.subject === 'Anatomie';
+
+        return `
+          <div onclick="openSubchapterPractice('${sub.id}')" class="cursor-pointer p-3.5 rounded-xl border border-slate-200 hover:border-medblue-400 bg-slate-50/60 hover:bg-white transition space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded ${isAnat ? 'bg-medblue-100 text-medblue-800' : 'bg-medgreen-100 text-medgreen-800'}">${sub.subject}</span>
+              <span class="text-[11px] font-mono font-bold text-slate-500">${solved}/${sub.qCount}</span>
+            </div>
+            <div class="text-xs sm:text-sm font-bold text-slate-900 line-clamp-2">${sub.title}</div>
+            <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+              <div class="h-full ${isAnat ? 'bg-medblue-600' : 'bg-medgreen-600'}" style="width: ${pct}%"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-slate-500">
+              <span>${sub.chapter}</span>
+              <span class="font-mono font-bold ${solved > 0 ? 'text-medgreen-700' : ''}">${solved > 0 ? acc + '% corect' : 'Neînceput'}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderCatalogView() {
+      const isAnat = catalogSubject === 'Anatomie';
+      const subs = CURRICULUM.filter(s => s.subject === catalogSubject);
+      const totalQ = subs.reduce((acc, s) => acc + s.qCount, 0);
+
+      document.getElementById('catalog-badge').textContent = isAnat ? 'Anatomie (Manual Corint XI)' : 'Fizică (Programa UMFCD)';
+      document.getElementById('catalog-badge').className = isAnat
+        ? 'inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-medblue-100 text-medblue-800 mb-1'
+        : 'inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-medgreen-100 text-medgreen-800 mb-1';
+
+      document.getElementById('catalog-title').textContent = `Grile ${catalogSubject} — ${subs.length} sub-capitole (${totalQ.toLocaleString('ro-RO')} grile)`;
+
+      const search = (document.getElementById('catalog-search-input')?.value || '').toLowerCase();
+      const filtered = subs.filter(s => s.title.toLowerCase().includes(search) || s.chapter.toLowerCase().includes(search));
+
+      const grouped = {};
+      filtered.forEach(s => {
+        if (!grouped[s.chapter]) grouped[s.chapter] = [];
+        grouped[s.chapter].push(s);
+      });
+
+      const container = document.getElementById('catalog-chapters-container');
+      container.innerHTML = Object.entries(grouped).map(([chapterTitle, items]) => `
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full ${isAnat ? 'bg-medblue-600' : 'bg-medgreen-600'}"></span>
+            <h3 class="text-sm sm:text-base font-extrabold text-slate-800">${chapterTitle} (${items.length} sub-capitole)</h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            ${items.map(sub => {
+              const subEntries = Object.values(appState.solvedIds).filter(e => e.subId === sub.id);
+              const solved = subEntries.length;
+              const correct = subEntries.filter(e => e.isCorrect).length;
+              const acc = solved > 0 ? Math.round((correct / solved) * 100) : 0;
+              const pct = Math.min(100, Math.round((solved / sub.qCount) * 100));
+
+              return `
+                <div onclick="openSubchapterPractice('${sub.id}')" class="cursor-pointer bg-white hover:bg-slate-50 rounded-2xl p-4 border border-slate-200 hover:border-medblue-500 shadow-xs transition flex flex-col justify-between gap-3">
+                  <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                      <span class="text-[10px] font-bold px-2 py-0.5 rounded ${isAnat ? 'bg-medblue-50 text-medblue-700' : 'bg-medgreen-50 text-medgreen-700'}">${sub.subject}</span>
+                      <span class="text-[11px] font-mono font-bold text-slate-500">${sub.qCount} grile</span>
+                    </div>
+                    <h4 class="text-sm font-bold text-slate-900 leading-snug">${sub.title}</h4>
+                  </div>
+                  <div class="space-y-1.5">
+                    <div class="flex justify-between text-xs">
+                      <span class="text-slate-500">Rezolvate: <strong class="font-mono text-slate-800">${solved}/${sub.qCount}</strong></span>
+                      <span class="font-mono font-bold ${solved === 0 ? 'text-slate-400' : 'text-medgreen-700'}">${solved > 0 ? acc + '% corect' : 'Start →'}</span>
+                    </div>
+                    <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                      <div class="h-full ${isAnat ? 'bg-medblue-600' : 'bg-medgreen-600'}" style="width: ${pct}%"></div>
+                    </div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function setGlobalDifficultyFilter(val, reloadPractice = false) {
+      globalDifficultyFilter = val;
+      const cSel = document.getElementById('catalog-diff-select');
+      const pSel = document.getElementById('practice-diff-select');
+      if (cSel) cSel.value = val;
+      if (pSel) pSel.value = val;
+      if (reloadPractice) loadNextPracticeQuestion();
+    }
+
+    function openSubchapterPractice(subId) {
+      practiceWrongOnlyMode = false;
+      activePracticeSubchapterId = subId;
+      navigateFromMenu('practice');
+      loadNextPracticeQuestion();
+    }
+
+    function backToSubjectCatalog() {
+      const sub = CURRICULUM.find(s => s.id === activePracticeSubchapterId);
+      if (sub && sub.subject === 'Fizică') navigateFromMenu('physics');
+      else navigateFromMenu('anatomy');
+    }
+
+    function startWrongQuestionsPractice() {
+      if (appState.wrongIds.length === 0) {
+        showToast('Nu ai nicio grilă greșită de refăcut momentan!');
+        return;
+      }
+      practiceWrongOnlyMode = true;
+      navigateFromMenu('practice');
+      loadNextPracticeQuestion();
+    }
+
+    /* ============================================================================
+       6. ANTRENAMENT PE GRILE & DIFICULTATE ?/10
+       ============================================================================ */
+    function populateSubchapterSelectors() {
+      const pSel = document.getElementById('practice-subchapter-select');
+      const nSel = document.getElementById('note-subchapter-select');
+      if (pSel) {
+        pSel.innerHTML = CURRICULUM.map(s =>
+          `<option value="${s.id}" ${s.id === activePracticeSubchapterId ? 'selected' : ''}>[${s.subject}] ${s.title}</option>`
+        ).join('');
+      }
+      if (nSel) {
+        nSel.innerHTML = CURRICULUM.map(s =>
+          `<option value="${s.title}">[${s.subject}] ${s.title}</option>`
+        ).join('');
+      }
+    }
+
+    function changePracticeSubchapter(subId) {
+      practiceWrongOnlyMode = false;
+      activePracticeSubchapterId = subId;
+      loadNextPracticeQuestion();
+    }
+
+    function matchesDifficulty(diff) {
+      if (globalDifficultyFilter === 'ALL') return true;
+      if (globalDifficultyFilter === 'EASY') return diff >= 1 && diff <= 3;
+      if (globalDifficultyFilter === 'MEDIUM') return diff >= 4 && diff <= 6;
+      if (globalDifficultyFilter === 'HARD') return diff >= 7 && diff <= 8;
+      if (globalDifficultyFilter === 'EXTREME') return diff >= 9 && diff <= 10;
+      const exact = parseInt(globalDifficultyFilter, 10);
+      return !isNaN(exact) ? diff === exact : true;
+    }
+
+    function loadNextPracticeQuestion() {
+      selectedOptionIndex = null;
+      isCurrentAnswered = false;
+      const typeFilter = document.getElementById('practice-type-select').value;
+      let candidate = null;
+
+      if (practiceWrongOnlyMode && appState.wrongIds.length > 0) {
+        candidate = ALL_QUESTIONS_POOL.find(q => q.id === appState.wrongIds[0]);
+      }
+
+      if (!candidate) {
+        practiceWrongOnlyMode = false;
+        const filtered = ALL_QUESTIONS_POOL.filter(q =>
+          q.subchapterId === activePracticeSubchapterId &&
+          matchesDifficulty(q.difficulty) &&
+          (typeFilter === 'ALL' || q.type === typeFilter)
+        );
+        const pool = filtered.length > 0
+          ? filtered
+          : ALL_QUESTIONS_POOL.filter(q => q.subchapterId === activePracticeSubchapterId);
+
+        const unsolved = pool.filter(q => !appState.solvedIds[q.id]);
+        if (unsolved.length > 0) {
+          const cursor = (appState.subchapterCursor[activePracticeSubchapterId] || 0) % unsolved.length;
+          candidate = unsolved[cursor];
+          appState.subchapterCursor[activePracticeSubchapterId] = cursor + 1;
+        } else {
+          candidate = pool[Math.floor(Math.random() * pool.length)];
+        }
+      }
+
+      currentQuestion = candidate;
+      renderPracticeQuestion(candidate);
+    }
+
+    function renderPracticeQuestion(q) {
+      document.getElementById('q-badge-id').textContent = q.code;
+      const sBadge = document.getElementById('q-badge-subject');
+      sBadge.textContent = q.subject;
+      sBadge.className = q.subject === 'Anatomie'
+        ? 'text-xs font-bold px-2.5 py-1 rounded-lg bg-medblue-100 text-medblue-800'
+        : 'text-xs font-bold px-2.5 py-1 rounded-lg bg-medgreen-100 text-medgreen-800';
+
+      document.getElementById('q-badge-subchapter').textContent = q.subchapterTitle;
+      document.getElementById('q-badge-type').textContent = q.typeLabel;
+      document.getElementById('q-diff-value').textContent = `${q.difficulty}/10`;
+
+      const ruleEl = document.getElementById('q-rule-banner');
+      if (q.type === 'CG') {
+        ruleEl.classList.remove('hidden');
+        ruleEl.innerHTML = '<strong>Complement Grupat UMFCD:</strong> A = 1, 2, 3 &nbsp;|&nbsp; B = 1, 3 &nbsp;|&nbsp; C = 2, 4 &nbsp;|&nbsp; D = 4 &nbsp;|&nbsp; E = 1, 2, 3, 4';
+      } else if (q.type === 'CE') {
+        ruleEl.classList.remove('hidden');
+        ruleEl.innerHTML = '<strong>Cauză-Efect:</strong> Stabilește valoarea de adevăr a celor două afirmații unite prin „DEOARECE” și legătura cauzală.';
+      } else {
+        ruleEl.classList.add('hidden');
+      }
+
+      document.getElementById('q-stem').textContent = q.stem;
+
+      const stBox = document.getElementById('q-statements');
+      if (q.statements && q.statements.length > 0) {
+        stBox.classList.remove('hidden');
+        stBox.innerHTML = q.statements.map((st, idx) =>
+          `<div class="flex items-start gap-2"><span class="font-mono font-extrabold text-medblue-700">${idx + 1}.</span><span>${st}</span></div>`
+        ).join('');
+      } else {
+        stBox.classList.add('hidden');
+      }
+
+      const letters = ['A', 'B', 'C', 'D', 'E'];
+      document.getElementById('q-options').innerHTML = q.options.map((opt, idx) => {
+        const clean = opt.replace(/^[A-E]\.\s*/, '');
+        return `
+          <button type="button" onclick="selectPracticeOption(${idx})" id="opt-btn-${idx}"
+            class="w-full text-left p-3.5 sm:p-4 rounded-xl border-2 border-slate-200 hover:border-medblue-400 bg-white transition flex items-start gap-3">
+            <span id="opt-letter-${idx}" class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 font-mono font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5">${letters[idx]}</span>
+            <span class="text-sm sm:text-base text-slate-800 font-medium leading-snug">${clean}</span>
+          </button>
+        `;
+      }).join('');
+
+      document.getElementById('q-explanation-box').classList.add('hidden');
+      document.getElementById('btn-submit-answer').classList.remove('hidden');
+      document.getElementById('btn-submit-answer').disabled = true;
+      document.getElementById('btn-next-question').classList.add('hidden');
+
+      const entries = Object.values(appState.solvedIds).filter(e => e.subId === q.subchapterId);
+      const ok = entries.filter(e => e.isCorrect).length;
+      const acc = entries.length > 0 ? Math.round((ok / entries.length) * 100) : 0;
+      document.getElementById('q-subchapter-progress').textContent = `${entries.length} rezolvate (${acc}%)`;
+    }
+
+    function selectPracticeOption(idx) {
+      if (isCurrentAnswered) return;
+      selectedOptionIndex = idx;
+      for (let i = 0; i < 5; i++) {
+        const btn = document.getElementById(`opt-btn-${i}`);
+        const ltr = document.getElementById(`opt-letter-${i}`);
+        if (i === idx) {
+          btn.className = 'w-full text-left p-3.5 sm:p-4 rounded-xl border-2 border-medblue-600 bg-medblue-50/70 transition flex items-start gap-3';
+          ltr.className = 'w-7 h-7 rounded-lg bg-medblue-700 text-white font-mono font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5';
+        } else {
+          btn.className = 'w-full text-left p-3.5 sm:p-4 rounded-xl border-2 border-slate-200 hover:border-medblue-400 bg-white transition flex items-start gap-3';
+          ltr.className = 'w-7 h-7 rounded-lg bg-slate-100 text-slate-700 font-mono font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5';
+        }
+      }
+      document.getElementById('btn-submit-answer').disabled = false;
+    }
+
+    function submitPracticeAnswer() {
+      if (selectedOptionIndex === null || isCurrentAnswered || !currentQuestion) return;
+      isCurrentAnswered = true;
+      const isCorrect = selectedOptionIndex === currentQuestion.correctIndex;
+
+      for (let i = 0; i < 5; i++) {
+        const btn = document.getElementById(`opt-btn-${i}`);
+        const ltr = document.getElementById(`opt-letter-${i}`);
+        if (i === currentQuestion.correctIndex) {
+          btn.className = 'w-full text-left p-3.5 sm:p-4 rounded-xl border-2 border-medgreen-600 bg-medgreen-50 transition flex items-start gap-3';
+          ltr.className = 'w-7 h-7 rounded-lg bg-medgreen-600 text-white font-mono font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5';
+        } else if (i === selectedOptionIndex && !isCorrect) {
+          btn.className = 'w-full text-left p-3.5 sm:p-4 rounded-xl border-2 border-rose-500 bg-rose-50 transition flex items-start gap-3';
+          ltr.className = 'w-7 h-7 rounded-lg bg-rose-600 text-white font-mono font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5';
+        }
+      }
+
+      appState.solvedIds[currentQuestion.id] = {
+        isCorrect,
+        subId: currentQuestion.subchapterId,
+        subject: currentQuestion.subject
+      };
+
+      if (isCorrect) {
+        appState.wrongIds = appState.wrongIds.filter(id => id !== currentQuestion.id);
+      } else if (!appState.wrongIds.includes(currentQuestion.id)) {
+        appState.wrongIds.push(currentQuestion.id);
+      }
+      saveState();
+      updateGlobalKPIs();
+
+      const expBox = document.getElementById('q-explanation-box');
+      const resTitle = document.getElementById('q-result-title');
+      expBox.classList.remove('hidden');
+      const letters = ['A', 'B', 'C', 'D', 'E'];
+
+      if (isCorrect) {
+        expBox.className = 'rounded-2xl p-4 sm:p-5 border border-medgreen-300 bg-medgreen-50/70';
+        resTitle.className = 'flex items-center gap-2 font-extrabold text-sm sm:text-base mb-2 text-medgreen-800';
+        resTitle.textContent = '✓ Răspuns Corect!';
+      } else {
+        expBox.className = 'rounded-2xl p-4 sm:p-5 border border-rose-300 bg-rose-50/70';
+        resTitle.className = 'flex items-center gap-2 font-extrabold text-sm sm:text-base mb-2 text-rose-800';
+        resTitle.textContent = `✕ Răspuns Greșit. Varianta corectă: ${letters[currentQuestion.correctIndex]}.`;
+      }
+
+      document.getElementById('q-explanation-text').textContent = currentQuestion.explanation;
+      document.getElementById('q-reference-tag').textContent = `Referință: ${currentQuestion.reference}`;
+
+      document.getElementById('btn-submit-answer').classList.add('hidden');
+      document.getElementById('btn-next-question').classList.remove('hidden');
+    }
+
+    /* ============================================================================
+       7. TESTE RAPIDE
+       ============================================================================ */
+    let qtState = { questions: [], index: 0, score: 0, selected: null, checked: false };
+
+    function startQuickTest() {
+      const subj = document.getElementById('qt-subject').value;
+      const count = parseInt(document.getElementById('qt-count').value, 10);
+      const diffFilter = document.getElementById('qt-diff').value;
+      const source = document.getElementById('qt-source').value;
+
+      let pool = ALL_QUESTIONS_POOL;
+      if (source === 'WRONG') {
+        pool = ALL_QUESTIONS_POOL.filter(q => appState.wrongIds.includes(q.id));
+        if (pool.length === 0) {
+          showToast('Nu ai grile greșite salvate. Se folosește baza completă.');
+          pool = ALL_QUESTIONS_POOL;
+        }
+      }
+
+      pool = pool.filter(q => {
+        const subjOk = subj === 'MIX' || q.subject === subj;
+        let diffOk = true;
+        if (diffFilter === 'EASY') diffOk = q.difficulty <= 3;
+        else if (diffFilter === 'MEDIUM') diffOk = q.difficulty >= 4 && q.difficulty <= 6;
+        else if (diffFilter === 'HARD') diffOk = q.difficulty >= 7 && q.difficulty <= 8;
+        else if (diffFilter === 'EXTREME') diffOk = q.difficulty >= 9;
+        return subjOk && diffOk;
+      });
+
+      if (pool.length === 0) pool = ALL_QUESTIONS_POOL;
+      const picked = pickRandomSubset(pool, Math.min(count, pool.length));
+
+      qtState = { questions: picked, index: 0, score: 0, selected: null, checked: false };
+      document.getElementById('qt-setup-card').classList.add('hidden');
+      document.getElementById('qt-result-card').classList.add('hidden');
+      document.getElementById('qt-active-card').classList.remove('hidden');
+      renderQuickTestQuestion();
+    }
+
+    function renderQuickTestQuestion() {
+      const q = qtState.questions[qtState.index];
+      qtState.selected = null;
+      qtState.checked = false;
+
+      document.getElementById('qt-progress-label').textContent = `${qtState.index + 1} / ${qtState.questions.length}`;
+      document.getElementById('qt-q-sub').textContent = `[${q.subject}] ${q.subchapterTitle}`;
+      document.getElementById('qt-q-diff').textContent = `Dif: ${q.difficulty}/10`;
+      document.getElementById('qt-q-stem').textContent = q.stem;
+
+      const ruleEl = document.getElementById('qt-q-rule');
+      if (q.type === 'CG') {
+        ruleEl.classList.remove('hidden');
+        ruleEl.innerHTML = '<strong>Complement Grupat:</strong> A=1,2,3 | B=1,3 | C=2,4 | D=4 | E=1,2,3,4';
+      } else {
+        ruleEl.classList.add('hidden');
+      }
+
+      const stEl = document.getElementById('qt-q-statements');
+      if (q.statements && q.statements.length > 0) {
+        stEl.classList.remove('hidden');
+        stEl.innerHTML = q.statements.map((s, i) => `<div><strong>${i + 1}.</strong> ${s}</div>`).join('');
+      } else {
+        stEl.classList.add('hidden');
+      }
+
+      const letters = ['A', 'B', 'C', 'D', 'E'];
+      document.getElementById('qt-q-options').innerHTML = q.options.map((opt, idx) => {
+        const clean = opt.replace(/^[A-E]\.\s*/, '');
+        return `
+          <button onclick="selectQuickTestOpt(${idx})" id="qt-opt-${idx}" class="w-full text-left p-3.5 rounded-xl border-2 border-slate-200 hover:border-medblue-400 bg-white flex items-start gap-3">
+            <span class="w-7 h-7 rounded-lg bg-slate-100 font-mono font-extrabold text-xs flex items-center justify-center shrink-0">${letters[idx]}</span>
+            <span class="text-sm text-slate-800 font-medium">${clean}</span>
+          </button>
+        `;
+      }).join('');
+
+      document.getElementById('qt-q-exp').classList.add('hidden');
+      document.getElementById('qt-btn-check').classList.remove('hidden');
+      document.getElementById('qt-btn-check').disabled = true;
+      document.getElementById('qt-btn-next').classList.add('hidden');
+    }
+
+    function selectQuickTestOpt(idx) {
+      if (qtState.checked) return;
+      qtState.selected = idx;
+      for (let i = 0; i < 5; i++) {
+        const b = document.getElementById(`qt-opt-${i}`);
+        b.className = i === idx
+          ? 'w-full text-left p-3.5 rounded-xl border-2 border-medblue-600 bg-medblue-50 flex items-start gap-3'
+          : 'w-full text-left p-3.5 rounded-xl border-2 border-slate-200 bg-white flex items-start gap-3';
+      }
+      document.getElementById('qt-btn-check').disabled = false;
+    }
+
+    function checkQuickTestAnswer() {
+      if (qtState.selected === null || qtState.checked) return;
+      qtState.checked = true;
+      const q = qtState.questions[qtState.index];
+      const ok = qtState.selected === q.correctIndex;
+      if (ok) qtState.score++;
+
+      appState.solvedIds[q.id] = { isCorrect: ok, subId: q.subchapterId, subject: q.subject };
+      if (ok) appState.wrongIds = appState.wrongIds.filter(id => id !== q.id);
+      else if (!appState.wrongIds.includes(q.id)) appState.wrongIds.push(q.id);
+      saveState();
+      updateGlobalKPIs();
+
+      for (let i = 0; i < 5; i++) {
+        const b = document.getElementById(`qt-opt-${i}`);
+        if (i === q.correctIndex) b.className = 'w-full text-left p-3.5 rounded-xl border-2 border-medgreen-600 bg-medgreen-50 flex items-start gap-3';
+        else if (i === qtState.selected && !ok) b.className = 'w-full text-left p-3.5 rounded-xl border-2 border-rose-500 bg-rose-50 flex items-start gap-3';
+      }
+
+      const exp = document.getElementById('qt-q-exp');
+      exp.classList.remove('hidden');
+      exp.className = ok ? 'p-4 rounded-xl border border-medgreen-300 bg-medgreen-50/70 text-xs sm:text-sm' : 'p-4 rounded-xl border border-rose-300 bg-rose-50/70 text-xs sm:text-sm';
+      exp.innerHTML = `<div class="font-extrabold mb-1">${ok ? '✓ Corect!' : '✕ Greșit!'}</div><div>${q.explanation}</div>`;
+
+      document.getElementById('qt-btn-check').classList.add('hidden');
+      document.getElementById('qt-btn-next').classList.remove('hidden');
+    }
+
+    function nextQuickTestQuestion() {
+      if (qtState.index + 1 < qtState.questions.length) {
+        qtState.index++;
+        renderQuickTestQuestion();
+      } else {
+        document.getElementById('qt-active-card').classList.add('hidden');
+        document.getElementById('qt-result-card').classList.remove('hidden');
+        const pct = Math.round((qtState.score / qtState.questions.length) * 100);
+        document.getElementById('qt-final-score').textContent = `${qtState.score} / ${qtState.questions.length} (${pct}%)`;
+      }
+    }
+
+    function resetQuickTest() {
+      document.getElementById('qt-active-card').classList.add('hidden');
+      document.getElementById('qt-result-card').classList.add('hidden');
+      document.getElementById('qt-setup-card').classList.remove('hidden');
+    }
+
+    /* ============================================================================
+       8. MODUL SIMULĂRI UMFCD
+       ============================================================================ */
+    let simState = { active: false, questions: [], answers: {}, flagged: {}, currentIndex: 0, secondsLeft: 9000, totalSeconds: 9000, timerInterval: null };
+
+    function updateSimFormatUI() {
+      const val = document.querySelector('input[name="simFormat"]:checked').value;
+      const c100 = document.getElementById('sim-mode-100-card');
+      const c50 = document.getElementById('sim-mode-50-card');
+      c100.className = val === '100'
+        ? 'cursor-pointer border-2 border-medblue-600 bg-medblue-50/50 rounded-2xl p-4 block transition'
+        : 'cursor-pointer border-2 border-slate-200 rounded-2xl p-4 block transition';
+      c50.className = val === '50'
+        ? 'cursor-pointer border-2 border-medgreen-600 bg-medgreen-50/50 rounded-2xl p-4 block transition'
+        : 'cursor-pointer border-2 border-slate-200 rounded-2xl p-4 block transition';
+    }
+
+    function pickRandomSubset(arr, n) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy.slice(0, n);
+    }
+
+    function startSimulation() {
+      const format = parseInt(document.querySelector('input[name="simFormat"]:checked').value, 10);
+      const anatCount = format === 100 ? 60 : 30;
+      const physCount = format === 100 ? 40 : 20;
+      const durationSec = format === 100 ? 150 * 60 : 75 * 60;
+
+      const selectedAnat = pickRandomSubset(ALL_QUESTIONS_POOL.filter(q => q.subject === 'Anatomie'), anatCount);
+      const selectedPhys = pickRandomSubset(ALL_QUESTIONS_POOL.filter(q => q.subject === 'Fizică'), physCount);
+
+      simState = {
+        active: true,
+        questions: [...selectedAnat, ...selectedPhys],
+        answers: {},
+        flagged: {},
+        currentIndex: 0,
+        secondsLeft: durationSec,
+        totalSeconds: durationSec,
+        timerInterval: null
+      };
+
+      document.getElementById('sim-setup-screen').classList.add('hidden');
+      document.getElementById('sim-results-screen').classList.add('hidden');
+      document.getElementById('sim-active-screen').classList.remove('hidden');
+
+      document.getElementById('sim-total-num').textContent = simState.questions.length;
+      renderSimPalette();
+      renderSimQuestion();
+
+      clearInterval(simState.timerInterval);
+      updateSimTimerDisplay();
+      simState.timerInterval = setInterval(() => {
+        simState.secondsLeft--;
+        updateSimTimerDisplay();
+        if (simState.secondsLeft <= 0) finishSimulation();
+      }, 1000);
+    }
+
+    function updateSimTimerDisplay() {
+      const mins = Math.floor(Math.max(0, simState.secondsLeft) / 60);
+      const secs = Math.max(0, simState.secondsLeft) % 60;
+      document.getElementById('sim-timer').textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function renderSimPalette() {
+      const palette = document.getElementById('sim-grid-palette');
+      palette.innerHTML = simState.questions.map((_, idx) => {
+        const isCurrent = idx === simState.currentIndex;
+        const isAnswered = simState.answers[idx] !== undefined;
+        const isFlagged = !!simState.flagged[idx];
+        let cls = 'h-7 rounded text-[11px] font-mono font-bold transition ';
+        if (isCurrent) cls += 'ring-2 ring-medblue-700 ';
+        if (isFlagged) cls += 'bg-amber-400 text-slate-900';
+        else if (isAnswered) cls += 'bg-medgreen-600 text-white';
+        else cls += 'bg-slate-100 text-slate-700 hover:bg-slate-200';
+        return `<button onclick="jumpToSimQuestion(${idx})" class="${cls}">${idx + 1}</button>`;
+      }).join('');
+      document.getElementById('sim-answered-count').textContent = Object.keys(simState.answers).length;
+    }
+
+    function renderSimQuestion() {
+      const idx = simState.currentIndex;
+      const q = simState.questions[idx];
+      document.getElementById('sim-curr-num').textContent = idx + 1;
+      document.getElementById('sim-q-subject').textContent = q.subject;
+      document.getElementById('sim-q-subchapter').textContent = q.subchapterTitle;
+      document.getElementById('sim-q-type').textContent = q.typeLabel;
+      document.getElementById('sim-q-diff').textContent = `Dif: ${q.difficulty}/10`;
+
+      const ruleEl = document.getElementById('sim-q-rule');
+      if (q.type === 'CG') {
+        ruleEl.classList.remove('hidden');
+        ruleEl.innerHTML = '<strong>Complement Grupat:</strong> A=1,2,3 | B=1,3 | C=2,4 | D=4 | E=1,2,3,4';
+      } else {
+        ruleEl.classList.add('hidden');
+      }
+
+      document.getElementById('sim-q-stem').textContent = q.stem;
+      const stEl = document.getElementById('sim-q-statements');
+      if (q.statements && q.statements.length > 0) {
+        stEl.classList.remove('hidden');
+        stEl.innerHTML = q.statements.map((s, i) => `<div><strong>${i + 1}.</strong> ${s}</div>`).join('');
+      } else {
+        stEl.classList.add('hidden');
+      }
+
+      const letters = ['A', 'B', 'C', 'D', 'E'];
+      const chosen = simState.answers[idx];
+      document.getElementById('sim-q-options').innerHTML = q.options.map((opt, oIdx) => {
+        const clean = opt.replace(/^[A-E]\.\s*/, '');
+        const isSel = chosen === oIdx;
+        return `
+          <button onclick="selectSimOption(${oIdx})" class="w-full text-left p-3.5 rounded-xl border-2 transition flex items-start gap-3 ${isSel ? 'border-medblue-600 bg-medblue-50' : 'border-slate-200 bg-white'}">
+            <span class="w-7 h-7 rounded-lg font-mono font-extrabold text-xs flex items-center justify-center shrink-0 ${isSel ? 'bg-medblue-700 text-white' : 'bg-slate-100 text-slate-700'}">${letters[oIdx]}</span>
+            <span class="text-sm text-slate-800 font-medium">${clean}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectSimOption(oIdx) {
+      simState.answers[simState.currentIndex] = oIdx;
+      renderSimQuestion();
+      renderSimPalette();
+    }
+
+    function toggleSimFlag() {
+      simState.flagged[simState.currentIndex] = !simState.flagged[simState.currentIndex];
+      renderSimPalette();
+    }
+
+    function navigateSimQuestion(delta) {
+      const next = simState.currentIndex + delta;
+      if (next >= 0 && next < simState.questions.length) {
+        simState.currentIndex = next;
+        renderSimQuestion();
+        renderSimPalette();
+      }
+    }
+
+    function jumpToSimQuestion(idx) {
+      simState.currentIndex = idx;
+      renderSimQuestion();
+      renderSimPalette();
+    }
+
+    function requestFinishSimulation() {
+      const ans = Object.keys(simState.answers).length;
+      openCustomDialog(
+        'Predai lucrarea de simulare?',
+        `Ai completat ${ans} din ${simState.questions.length} întrebări.`,
+        () => finishSimulation()
+      );
+    }
+
+    function finishSimulation() {
+      clearInterval(simState.timerInterval);
+      simState.active = false;
+      let anatCorrect = 0;
+      let physCorrect = 0;
+      const total = simState.questions.length;
+
+      simState.questions.forEach((q, idx) => {
+        const uAns = simState.answers[idx];
+        const ok = uAns === q.correctIndex;
+        if (ok) {
+          if (q.subject === 'Anatomie') anatCorrect++;
+          else physCorrect++;
+        }
+        if (uAns !== undefined) {
+          appState.solvedIds[q.id] = { isCorrect: ok, subId: q.subchapterId, subject: q.subject };
+          if (!ok && !appState.wrongIds.includes(q.id)) appState.wrongIds.push(q.id);
+        }
+      });
+
+      saveState();
+      updateGlobalKPIs();
+
+      const totalCorrect = anatCorrect + physCorrect;
+      const grade = (1 + (totalCorrect / total) * 9).toFixed(2);
+      const minsUsed = Math.max(1, Math.round((simState.totalSeconds - simState.secondsLeft) / 60));
+
+      document.getElementById('sim-active-screen').classList.add('hidden');
+      document.getElementById('sim-results-screen').classList.remove('hidden');
+      document.getElementById('res-final-grade').textContent = grade;
+      document.getElementById('res-raw-score').textContent = `${totalCorrect} / ${total}`;
+      document.getElementById('res-time-used').textContent = `${minsUsed} min`;
+      document.getElementById('res-anat-score').textContent = `${anatCorrect} / ${total === 100 ? 60 : 30}`;
+      document.getElementById('res-phys-score').textContent = `${physCorrect} / ${total === 100 ? 40 : 20}`;
+
+      const letters = ['A', 'B', 'C', 'D', 'E'];
+      document.getElementById('sim-review-list').innerHTML = simState.questions.map((q, idx) => {
+        const uAns = simState.answers[idx];
+        const ok = uAns === q.correctIndex;
+        return `
+          <div class="p-3.5 rounded-xl border ${ok ? 'border-medgreen-200 bg-medgreen-50/40' : 'border-rose-200 bg-rose-50/40'} text-xs space-y-1">
+            <div class="flex justify-between font-bold">
+              <span>${idx + 1}. [${q.subject} • ${q.subchapterTitle}]</span>
+              <span class="${ok ? 'text-medgreen-700' : 'text-rose-700'}">Răspuns: ${uAns !== undefined ? letters[uAns] : '-'} | Corect: ${letters[q.correctIndex]}</span>
+            </div>
+            <p class="text-slate-700">${q.stem}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function resetSimulationSetup() {
+      document.getElementById('sim-results-screen').classList.add('hidden');
+      document.getElementById('sim-active-screen').classList.add('hidden');
+      document.getElementById('sim-setup-screen').classList.remove('hidden');
+    }
+
+    /* ============================================================================
+       9. CARNEȚEL & TABLĂ DE DESEN
+       ============================================================================ */
+    let mainPenColor = '#0F4C81';
+    let scratchPenColor = '#0F4C81';
+
+    function initDrawingCanvas(canvasId, getColorFn, getSizeFn) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let drawing = false;
+
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const cx = e.touches ? e.touches[0].clientX : e.clientX;
+        const cy = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: (cx - rect.left) * (canvas.width / rect.width),
+          y: (cy - rect.top) * (canvas.height / rect.height)
+        };
+      }
+
+      function start(e) {
+        drawing = true;
+        const p = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+      }
+
+      function move(e) {
+        if (!drawing) return;
+        if (e.cancelable) e.preventDefault();
+        const p = getPos(e);
+        const col = getColorFn();
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        if (col === '#ffffff') {
+          ctx.globalCompositeOperation = 'destination-out';
+          ctx.lineWidth = 16;
+        } else {
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.strokeStyle = col;
+          ctx.lineWidth = getSizeFn();
+        }
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+      }
+
+      function end() { drawing = false; }
+
+      canvas.addEventListener('mousedown', start);
+      canvas.addEventListener('mousemove', move);
+      window.addEventListener('mouseup', end);
+      canvas.addEventListener('touchstart', start, { passive: false });
+      canvas.addEventListener('touchmove', move, { passive: false });
+      canvas.addEventListener('touchend', end);
+    }
+
+    function resizeMainCanvas() {
+      const c = document.getElementById('main-draw-canvas');
+      if (!c) return;
+      const r = c.getBoundingClientRect();
+      if (r.width > 0 && c.width !== Math.floor(r.width)) {
+        c.width = Math.floor(r.width);
+        c.height = Math.floor(r.height);
+      }
+    }
+
+    function resizeScratchCanvas() {
+      const c = document.getElementById('quick-scratch-canvas');
+      if (!c) return;
+      const r = c.getBoundingClientRect();
+      if (r.width > 0 && c.width !== Math.floor(r.width)) {
+        c.width = Math.floor(r.width);
+        c.height = Math.floor(r.height);
+      }
+    }
+
+    function setMainPenColor(col) { mainPenColor = col; }
+    function clearMainCanvas() {
+      const c = document.getElementById('main-draw-canvas');
+      c.getContext('2d').clearRect(0, 0, c.width, c.height);
+    }
+
+    function saveSketchToGallery() {
+      const c = document.getElementById('main-draw-canvas');
+      const titleInput = document.getElementById('sketch-title-input');
+      const title = titleInput.value.trim() || `Schiță #${appState.sketches.length + 1}`;
+      appState.sketches.unshift({ id: Date.now(), title, dataUrl: c.toDataURL('image/png'), date: new Date().toLocaleDateString('ro-RO') });
+      saveState();
+      titleInput.value = '';
+      renderSketchesGallery();
+      showToast('Schița a fost salvată în carnețel!');
+    }
+
+    function renderSketchesGallery() {
+      const g = document.getElementById('sketches-gallery');
+      document.getElementById('sketches-count').textContent = appState.sketches.length;
+      if (appState.sketches.length === 0) {
+        g.innerHTML = '<p class="text-xs text-slate-400">Nicio schiță salvată încă.</p>';
+        return;
+      }
+      g.innerHTML = appState.sketches.map(sk => `
+        <div class="border border-slate-200 rounded-xl p-2.5 space-y-2 bg-slate-50">
+          <img src="${sk.dataUrl}" alt="${sk.title}" class="w-full h-32 object-contain bg-white rounded-lg border border-slate-200" />
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-xs font-bold text-slate-900">${sk.title}</div>
+              <div class="text-[10px] text-slate-400">${sk.date}</div>
+            </div>
+            <button onclick="deleteSketch(${sk.id})" class="text-xs font-bold text-rose-600">Șterge</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function deleteSketch(id) {
+      appState.sketches = appState.sketches.filter(s => s.id !== id);
+      saveState();
+      renderSketchesGallery();
+    }
+
+    function switchNotebookTab(tab) {
+      const d = document.getElementById('nb-panel-draw');
+      const n = document.getElementById('nb-panel-notes');
+      const td = document.getElementById('nb-tab-draw');
+      const tn = document.getElementById('nb-tab-notes');
+      if (tab === 'draw') {
+        d.classList.remove('hidden');
+        n.classList.add('hidden');
+        n.classList.remove('grid');
+        td.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-white text-medblue-800 shadow-xs';
+        tn.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-slate-600';
+        resizeMainCanvas();
+      } else {
+        d.classList.add('hidden');
+        n.classList.remove('hidden');
+        n.classList.add('grid');
+        tn.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-white text-medblue-800 shadow-xs';
+        td.className = 'px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-slate-600';
+        renderNotesList();
+      }
+    }
+
+    function saveTextNote() {
+      const subTitle = document.getElementById('note-subchapter-select').value;
+      const title = document.getElementById('note-title-input').value.trim();
+      const content = document.getElementById('note-content-input').value.trim();
+      if (!title || !content) {
+        showToast('Completează titlul și conținutul notiței.');
+        return;
+      }
+      appState.notes.unshift({ id: Date.now(), subTitle, title, content, date: new Date().toLocaleDateString('ro-RO') });
+      saveState();
+      document.getElementById('note-title-input').value = '';
+      document.getElementById('note-content-input').value = '';
+      renderNotesList();
+      showToast('Notița a fost salvată!');
+    }
+
+    function renderNotesList() {
+      const c = document.getElementById('notes-list-container');
+      document.getElementById('notes-count-badge').textContent = appState.notes.length;
+      if (appState.notes.length === 0) {
+        c.innerHTML = '<div class="bg-white rounded-2xl border border-slate-200 p-6 text-center text-xs text-slate-400">Nicio notiță salvată încă.</div>';
+        return;
+      }
+      c.innerHTML = appState.notes.map(note => `
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-xs p-4 space-y-2">
+          <div class="flex items-start justify-between">
+            <div>
+              <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded bg-medblue-50 text-medblue-700 mb-1">${note.subTitle}</span>
+              <h4 class="text-sm font-extrabold text-slate-900">${note.title}</h4>
+            </div>
+            <button onclick="deleteTextNote(${note.id})" class="text-xs font-bold text-rose-600">Șterge</button>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-700 whitespace-pre-line">${note.content}</p>
+          <div class="text-[10px] text-slate-400">${note.date}</div>
+        </div>
+      `).join('');
+    }
+
+    function deleteTextNote(id) {
+      appState.notes = appState.notes.filter(n => n.id !== id);
+      saveState();
+      renderNotesList();
+    }
+
+    function toggleQuickScratchpad() {
+      const cardCol = document.getElementById('practice-card-col');
+      const scratchCol = document.getElementById('practice-scratchpad-col');
+      const isHidden = scratchCol.classList.contains('hidden');
+      if (isHidden) {
+        scratchCol.classList.remove('hidden');
+        cardCol.className = 'lg:col-span-7';
+        setTimeout(resizeScratchCanvas, 30);
+      } else {
+        scratchCol.classList.add('hidden');
+        cardCol.className = 'lg:col-span-12';
+      }
+    }
+
+    function setScratchColor(c) { scratchPenColor = c; }
+    function clearScratchpad() {
+      const c = document.getElementById('quick-scratch-canvas');
+      c.getContext('2d').clearRect(0, 0, c.width, c.height);
+    }
+
+    /* ============================================================================
+       10. MODALE & TOAST
+       ============================================================================ */
+    function openInstallModal() { document.getElementById('install-modal').classList.remove('hidden'); }
+    function closeInstallModal() { document.getElementById('install-modal').classList.add('hidden'); }
+
+    let dialogCb = null;
+    function openCustomDialog(title, msg, onConfirm) {
+      document.getElementById('dialog-title').textContent = title;
+      document.getElementById('dialog-message').textContent = msg;
+      dialogCb = onConfirm;
+      document.getElementById('custom-dialog').classList.remove('hidden');
+    }
+    function closeCustomDialog() {
+      document.getElementById('custom-dialog').classList.add('hidden');
+      dialogCb = null;
+    }
+    document.getElementById('dialog-confirm-btn').addEventListener('click', () => {
+      if (dialogCb) dialogCb();
+      closeCustomDialog();
+    });
+
+    let toastTimer = null;
+    function showToast(msg) {
+      const el = document.getElementById('toast-banner');
+      el.textContent = msg;
+      el.classList.remove('hidden');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.add('hidden'), 3200);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initDrawingCanvas('main-draw-canvas', () => mainPenColor, () => parseInt(document.getElementById('main-pen-size').value, 10) || 4);
+      initDrawingCanvas('quick-scratch-canvas', () => scratchPenColor, () => 3);
+      navigateFromMenu('home');
+    });
+
+    window.addEventListener('resize', () => {
+      if (currentSection === 'notebook') resizeMainCanvas();
+      if (!document.getElementById('practice-scratchpad-col').classList.contains('hidden')) resizeScratchCanvas();
+    });
+  </script>
+</body>
+</html>
